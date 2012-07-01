@@ -9,12 +9,43 @@
 <div class="page-header">
     <h1>My matches</h1>
 </div>
-<g:link class="btn" action="newMatch"><g:message code="match.new.label" default="New match"/></g:link>
-<ul>
-    <g:each var="match" in="${matches}">
-        <li>${match.player1}(${match.player1rating}) vs. ${match.player2}(${match.player2rating}) - winner: ${match.winner} - <i>${match.description}</i>
-        </li>
-    </g:each>
-</ul>
+
+<div class="navbar">
+    <g:link class="btn" action="newMatch"><i class="icon-plus-sign"></i> <g:message code="match.new.label"
+                                                                                    default="New match"/></g:link>
+</div>
+<g:if test="${matchesTotal > 0}">
+    <div>
+        <table class="table table-striped ">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Players</th>
+                <th>Winner</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <g:each var="match" in="${matches}">
+                <tr>
+                    <td>${match.id}</td>
+                    <td>${match.played}</td>
+                    <td>${match.player1}(${match.player1rating}) vs. ${match.player2}(${match.player2rating})</td>
+                    <td>${match.winner}</td>
+                    <td><i>${match.description}</i></td>
+                </tr>
+            </g:each>
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+    <g:paginate maxSteps="2" max="5" total="${matchesTotal}" controller="match" action="myMatches"/>
+    </div>
+
+</g:if>
+<g:else>
+    <div class="alert alert-info">You have no matches played in this ladder so far. Why don't you challenge a friend a get started?</div>
+</g:else>
 </body>
 </html>

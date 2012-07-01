@@ -13,13 +13,28 @@ class MatchController {
     def myMatches() {
         def userId = springSecurityService.currentUser.properties["id"]
         log.debug("Current user's id: " + userId)
-        def matches = Match.withCriteria(max: 10, offset: params.offset ?: 0){
+        def offset = params.offset?.isInteger() ? params.offset as int : 0;
+        log.debug("offset: " + offset)
+        def max = params.max?.isInteger() ? params.max as int : 5;
+        log.debug("max: " + max)
+        def criteria = Match.createCriteria()
+        def matches = criteria.list{
+            or {
+                eq("player1.id", userId)
+                eq("player2.id", userId)
+            }
+            maxResults(max)
+            firstResult(offset)
+            order("id", "desc")
+        }
+        def criteria2 = Match.createCriteria()
+        def matchesCount = criteria2.count{
             or {
                 eq("player1.id", userId)
                 eq("player2.id", userId)
             }
         }
-        [matches: matches]
+        [matches: matches, matchesTotal: matchesCount]
     }
 
     def newMatch() {
