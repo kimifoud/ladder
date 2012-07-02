@@ -21,8 +21,7 @@
             <tr>
                 <th>#</th>
                 <th>Date</th>
-                <th>Players</th>
-                <th>Winner</th>
+                <th colspan="2" style="text-align:center">Players</th>
                 <th>Description</th>
             </tr>
             </thead>
@@ -31,9 +30,9 @@
                 <tr>
                     <td>${match.id}</td>
                     <td><g:formatDate format="HH:mm dd.MM.yyyy" date="${match.played}"/></td>
-                    <td>${match.player1}(${match.player1rating} <cw:ratingChangeBadge ratingChange="${match.player1ratingChange}" />) vs. ${match.player2}(${match.player2rating} <cw:ratingChangeBadge ratingChange="${match.player2ratingChange}" />)</td>
-                    <td>${match.winner} </td>
-                    <td><i>${match.description}</i></td>
+                    <td style="text-align:right"><g:link controller="player" action="show" id="${match.player1.id}">${match.player1}</g:link> <cw:ratingChangeBadge rating="${match.player1rating}" ratingChange="${match.player1ratingChange}" /></td>
+                    <td><cw:ratingChangeBadge rating="${match.player2rating}" ratingChange="${match.player2ratingChange}" /> <g:link controller="player" action="show" id="${match.player2.id}">${match.player2}</g:link></td>
+                    <td><i><cw:cutString str="${match.description}" l="70"/></i></td>
                 </tr>
             </g:each>
             </tbody>

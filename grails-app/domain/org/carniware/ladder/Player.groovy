@@ -1,5 +1,7 @@
 package org.carniware.ladder
 
+import java.math.RoundingMode
+
 class Player extends User {
 
     BigDecimal eloRating = new BigDecimal("1500")
