@@ -11,4 +11,9 @@ class Ladder {
         title(blank: false)
         description(blank: false)
     }
+
+    String toString() {
+        title
+    }
+
 }

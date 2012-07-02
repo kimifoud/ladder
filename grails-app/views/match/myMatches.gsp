@@ -30,9 +30,9 @@
             <g:each var="match" in="${matches}">
                 <tr>
                     <td>${match.id}</td>
-                    <td>${match.played}</td>
-                    <td>${match.player1}(${match.player1rating}) vs. ${match.player2}(${match.player2rating})</td>
-                    <td>${match.winner}</td>
+                    <td><g:formatDate format="HH:mm dd.MM.yyyy" date="${match.played}"/></td>
+                    <td>${match.player1}(${match.player1rating} <cw:ratingChangeBadge ratingChange="${match.player1ratingChange}" />) vs. ${match.player2}(${match.player2rating} <cw:ratingChangeBadge ratingChange="${match.player2ratingChange}" />)</td>
+                    <td>${match.winner} </td>
                     <td><i>${match.description}</i></td>
                 </tr>
             </g:each>
@@ -45,7 +45,7 @@
 
 </g:if>
 <g:else>
-    <div class="alert alert-info">You have no matches played in this ladder so far. Why don't you challenge a friend a get started?</div>
+    <div class="alert alert-info">You have no matches played in this ladder so far. Why don't you challenge a friend and get started?</div>
 </g:else>
 </body>
 </html>

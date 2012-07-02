@@ -25,6 +25,8 @@ class User {
 		password column: '`password`'
 	}
 
+    static transients = ['fullName']
+
 	Set<Role> getAuthorities() {
 		UserRole.findAllByUser(this).collect { it.role } as Set
 	}
@@ -45,5 +47,9 @@ class User {
 
     String toString() {
         return firstName + " " + lastName
+    }
+
+    String getFullName() {
+        toString()
     }
 }

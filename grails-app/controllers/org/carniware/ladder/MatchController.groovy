@@ -1,24 +1,24 @@
 package org.carniware.ladder
 
 import grails.plugins.springsecurity.Secured
-import org.carniware.ladder.Match
 
 @Secured(['ROLE_USER'])
 class MatchController {
 
     def springSecurityService
+    def ratingService
 
     static defaultAction = "myMatches"
 
     def myMatches() {
         def userId = springSecurityService.currentUser.properties["id"]
-        log.debug("Current user's id: " + userId)
+        log.debug("Current user: " + userId)
         def offset = params.offset?.isInteger() ? params.offset as int : 0;
         log.debug("offset: " + offset)
         def max = params.max?.isInteger() ? params.max as int : 5;
         log.debug("max: " + max)
         def criteria = Match.createCriteria()
-        def matches = criteria.list{
+        def matches = criteria.list {
             or {
                 eq("player1.id", userId)
                 eq("player2.id", userId)
@@ -28,7 +28,7 @@ class MatchController {
             order("id", "desc")
         }
         def criteria2 = Match.createCriteria()
-        def matchesCount = criteria2.count{
+        def matchesCount = criteria2.count {
             or {
                 eq("player1.id", userId)
                 eq("player2.id", userId)
@@ -38,6 +38,57 @@ class MatchController {
     }
 
     def newMatch() {
-        [match: new Match()]
+        def userId = springSecurityService.currentUser.properties["id"]
+        def opponents = Player.findByIdNotEqual(userId)
+        [match: new Match(params), opponents: opponents]
+    }
+
+    def ajaxGetWinnersSelect = {
+        def userId = springSecurityService.currentUser.properties["id"]
+        def currentPlayer, selectedOpponent
+        if (userId) {
+            currentPlayer = Player.findById(userId)
+            currentPlayer?.password = null
+            currentPlayer?.matches = null
+        }
+        if (params?.id && params.id != 'null') {
+            selectedOpponent = Player.findById(params.id)
+            selectedOpponent.password = null
+            selectedOpponent.matches = null
+        }
+        if (currentPlayer && selectedOpponent) {
+            def winners = [currentPlayer, selectedOpponent]
+            render g.select(name: 'winner', optionKey: 'id', optionValue: 'fullName', from: winners, id: 'winner')
+        } else {
+            render g.select(name: 'winner', optionKey: 'id', from: ["Select opponent first..."], id: 'winner')
+        }
+    }
+
+    def save() {
+        def match = new Match(params)
+        match.ladder = Ladder.findById(1) // TODO current ladder in session or something
+        def player1 = Player.findByUsername(springSecurityService.currentUser.properties["username"])
+        match.player1 = player1
+        match.player1rating = player1.eloRating
+        def player2 = Player.findById(params.player2)
+        match.player2 = player2
+        match.player2rating = player2.eloRating
+        match.winner = Player.findById(params.winner)
+        match.validate()
+        if (!match.save(flush: true)) {
+            def userId = springSecurityService.currentUser.properties["id"]
+            def opponents = Player.findByIdNotEqual(userId)
+            render(view: "newMatch", model: [match: match, opponents: opponents])
+            return
+        }
+        try {
+            ratingService.calculateNewRatings(player1, player2, match)
+        } catch (Exception e) {
+            log.error("Error calculating ratings.", e)
+            throw new RuntimeException("Crap happened while calculating new ratings.. :'(")
+        }
+
+        flash.message = message(code: 'default.created.message', args: [message(code: 'match.label', default: 'Match'), match.id])
+        redirect(action: "show", id: match.id)
     }
 }
