@@ -1,3 +1,11 @@
+/* own stuff begin */
+
+#matches tr:hover {
+    cursor: pointer;
+}
+
+/* own stuff end */
+
 /* FONT STACK */
 /*body,*/
 /*input, select, textarea {*/

@@ -3,6 +3,16 @@
     <meta name='layout' content='main'/>
     <r:require modules="application"/>
     <title>My matches</title>
+    <g:javascript>
+        $(document).ready(function() {
+            $('#matches tr').click(function() {
+                var href = $(this).find("a").attr("href");
+                if(href) {
+                    window.location = href;
+                }
+            });
+        });
+    </g:javascript>
 </head>
 
 <body>
@@ -16,7 +26,7 @@
 </div>
 <g:if test="${matchesTotal > 0}">
     <div>
-        <table class="table table-striped ">
+        <table class="table table-striped" id="matches">
             <thead>
             <tr>
                 <th>#</th>
@@ -29,7 +39,7 @@
             <g:each var="match" in="${matches}">
                 <tr>
                     <td>${match.id}</td>
-                    <td><g:formatDate format="HH:mm dd.MM.yyyy" date="${match.played}"/></td>
+                    <td><g:link controller="match" action="show" id="${match.id}"><g:formatDate format="HH:mm dd.MM.yyyy" date="${match.played}"/></g:link></td>
                     <td style="text-align:right"><g:link controller="player" action="show" id="${match.player1.id}">${match.player1}</g:link> <cw:ratingChangeBadge rating="${match.player1rating}" ratingChange="${match.player1ratingChange}" /></td>
                     <td><cw:ratingChangeBadge rating="${match.player2rating}" ratingChange="${match.player2ratingChange}" /> <g:link controller="player" action="show" id="${match.player2.id}">${match.player2}</g:link></td>
                     <td><i><cw:cutString str="${match.description}" l="70"/></i></td>
@@ -44,7 +54,7 @@
 
 </g:if>
 <g:else>
-    <div class="alert alert-info">You have no matches played in this ladder so far. Why don't you challenge a friend and get started?</div>
+    <div class="alert alert-info">You have not played any matches in this ladder so far. Why don't you challenge a friend and get started?</div>
 </g:else>
 </body>
 </html>

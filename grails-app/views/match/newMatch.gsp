@@ -27,7 +27,7 @@
         <f:field property="played">
             <g:datePicker name="played" precision="minute" relativeYears="[0..0]"/>
         </f:field>
-        <f:field property="description"/>
+        <f:field property="description" class="span3"/>
     </f:with>
     <g:submitButton name="submit" value="Submit"/>
 </g:form>

@@ -33,6 +33,9 @@ class BootStrap {
 
         def ladder = Ladder.findByTitle('Testladder') ?: new Ladder(title: 'Testladder', description: 'This is a test ladder')
         ladder.save(failOnError: true, flush: true)
+        ladder.addToPlayers(admin)
+        ladder.addToPlayers(user)
+        ladder.save(failOnError: true, flush: true)
         assert Ladder.count() == 1
         assert Match.count() == 0
     }

@@ -30,11 +30,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <g:link controller="public" action="index" class="brand">The Ladder</g:link>
+            <g:link controller="public" action="index" class="brand">The Ladder<sup> BETA</sup></g:link>
             <div class="nav-collapse">
                 <ul class="nav">
                     <li ${controllerName in ['public', 'home', 'login'] ? 'class="active"' : ''}><g:link
                             controller="public">Home</g:link></li>
+                    <sec:ifLoggedIn>
+                        <li ${controllerName in ['match'] ? 'class="active"' : ''}><g:link
+                                controller="match" action="myMatches">My matches</g:link></li>
+                        <li ${controllerName in ['ladder'] ? 'class="active"' : ''}><g:link
+                                controller="ladder" action="leaderboard">Ladder</g:link></li>
+                    </sec:ifLoggedIn>
                     <li ${controllerName in ['about'] ? 'class="active"' : ''}><g:link uri="#">About</g:link></li>
                 </ul>
                 <ul class="nav pull-right">

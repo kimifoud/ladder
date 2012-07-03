@@ -10,7 +10,7 @@ class LadderController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
-        redirect(action: "list", params: params)
+        redirect(action: "leaderboard")
     }
 
     def list() {
@@ -31,14 +31,14 @@ class LadderController {
             return
         }
 
-		flash.message = message(code: 'default.created.message', args: [message(code: 'ladder.label', default: 'Ladder'), ladderInstance.id])
+        flash.message = message(code: 'default.created.message', args: [message(code: 'ladder.label', default: 'Ladder'), ladderInstance.id])
         redirect(action: "show", id: ladderInstance.id)
     }
 
     def show() {
         def ladderInstance = Ladder.get(params.id)
         if (!ladderInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'ladder.label', default: 'Ladder'), params.id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'ladder.label', default: 'Ladder'), params.id])
             redirect(action: "list")
             return
         }
@@ -71,8 +71,8 @@ class LadderController {
             def version = params.version.toLong()
             if (ladderInstance.version > version) {
                 ladderInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'ladder.label', default: 'Ladder')] as Object[],
-                          "Another user has updated this Ladder while you were editing")
+                        [message(code: 'ladder.label', default: 'Ladder')] as Object[],
+                        "Another user has updated this Ladder while you were editing")
                 render(view: "edit", model: [ladderInstance: ladderInstance])
                 return
             }
@@ -85,7 +85,7 @@ class LadderController {
             return
         }
 
-		flash.message = message(code: 'default.updated.message', args: [message(code: 'ladder.label', default: 'Ladder'), ladderInstance.id])
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'ladder.label', default: 'Ladder'), ladderInstance.id])
         redirect(action: "show", id: ladderInstance.id)
     }
 
@@ -93,19 +93,35 @@ class LadderController {
     def delete() {
         def ladderInstance = Ladder.get(params.id)
         if (!ladderInstance) {
-			flash.message = message(code: 'default.not.found.message', args: [message(code: 'ladder.label', default: 'Ladder'), params.id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'ladder.label', default: 'Ladder'), params.id])
             redirect(action: "list")
             return
         }
 
         try {
             ladderInstance.delete(flush: true)
-			flash.message = message(code: 'default.deleted.message', args: [message(code: 'ladder.label', default: 'Ladder'), params.id])
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'ladder.label', default: 'Ladder'), params.id])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'ladder.label', default: 'Ladder'), params.id])
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'ladder.label', default: 'Ladder'), params.id])
             redirect(action: "show", id: params.id)
         }
+    }
+
+    def leaderboard() {
+        Long ladderId = 1L // TODO: multiple ladders support
+        def ladder = Ladder.findById(ladderId)
+        def players = Player.withCriteria {
+            join "ladder"
+            eq "ladder.id", ladderId
+            order("eloRating", "desc")
+        }
+        def matches = Match.withCriteria {
+            join "ladder"
+            eq "ladder.id", ladderId
+            order("id", "desc")
+        }
+        render(view: "ladder", model: [ladder:  ladder, players: players, matches: matches])
     }
 }

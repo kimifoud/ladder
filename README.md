@@ -11,7 +11,6 @@ Plugins used:
 - cached-resources:1.0
 - zipped-resources:1.0
 - yui-minify-resources:0.1.5
-- less-resources:1.3.0.2
 - cache-headers:1.1.5
 
 
@@ -20,9 +19,12 @@ TODO:
   - Instructions
   - Basic structure
 - Code
-  - match insert
   - page which shows ladder's recent matches
+  - single match view
   - edit own matches within an hour of insert
-  - delete own matches
+  - delete own matches within an hour of insert
   - navigation
+  - comments to matches (and players)
   - tests
+  - Shoutbox!
+  - support for multiple ladders
