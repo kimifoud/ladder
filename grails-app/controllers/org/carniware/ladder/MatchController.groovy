@@ -38,7 +38,7 @@ class MatchController {
 
     def newMatch() {
         def userId = springSecurityService.currentUser.properties["id"]
-        def opponents = Player.findByIdNotEqual(userId)
+        def opponents = Player.findAllByIdNotEqual(userId)
         [match: new Match(params), opponents: opponents]
     }
 
@@ -65,18 +65,25 @@ class MatchController {
 
     def save() {
         def match = new Match(params)
-        match.ladder = Ladder.findById(1) // TODO current ladder in session or something
+        def ladder = Ladder.findById(1) // TODO current ladder in session or something
+        match.ladder = ladder
         def player1 = Player.findByUsername(springSecurityService.currentUser.properties["username"])
+        if (!player1.ladder) {
+            ladder.addToPlayers(player1)
+        }
         match.player1 = player1
         match.player1rating = player1.eloRating
         def player2 = Player.findById(params.player2)
+        if (!player2.ladder) {
+            ladder.addToPlayers(player2)
+        }
         match.player2 = player2
         match.player2rating = player2.eloRating
         match.winner = Player.findById(params.winner)
         match.validate()
         if (!match.save(flush: true)) {
             def userId = springSecurityService.currentUser.properties["id"]
-            def opponents = Player.findByIdNotEqual(userId)
+            def opponents = Player.findAllByIdNotEqual(userId)
             render(view: "newMatch", model: [match: match, opponents: opponents])
             return
         }

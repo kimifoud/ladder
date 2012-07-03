@@ -12,7 +12,7 @@
 // }
 
 
-grails.project.groupId = 'com.carniware.ladder' // change this to alter the default package name and Maven publishing destination
+grails.project.groupId = 'org.carniware.ladder' // change this to alter the default package name and Maven publishing destination
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
 grails.mime.types = [html: ['text/html', 'application/xhtml+xml'],
@@ -100,3 +100,8 @@ grails.plugins.springsecurity.successHandler.defaultTargetURL = '/home'
 
 grails.plugins.twitterbootstrap.fixtaglib = true
 grails.plugins.twitterbootstrap.defaultBundle = 'bundle_bootstrap'
+
+grails.gorm.default.mapping = {
+    version true
+    autoTimestamp true
+}

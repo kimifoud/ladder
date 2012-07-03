@@ -20,11 +20,13 @@ TODO:
   - Basic structure
 - Code
   - single match view
+  - player view
   - edit own matches within an hour of insert
   - delete own matches within an hour of insert
   - navigation
   - comments to matches (and players)
   - tests
-  - Shoutbox!
   - support for multiple ladders
+  - openid auth
   - i18n
+  - Shoutbox!

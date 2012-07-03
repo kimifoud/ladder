@@ -1,10 +1,11 @@
-package com.carniware.ladder
+package org.carniware.ladder
 
 
 
 import grails.test.mixin.*
 import org.junit.*
 import java.math.RoundingMode
+import com.carniware.ladder.CarniwareTagLib
 
 /**
  * See the API for {@link grails.test.mixin.web.GroovyPageUnitTestMixin} for usage instructions

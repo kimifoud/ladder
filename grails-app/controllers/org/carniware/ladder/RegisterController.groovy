@@ -16,6 +16,8 @@ class RegisterController {
         player.enabled = true
         if (player.validate()) {
             player.save()
+            def userRole = Role.findByAuthority('ROLE_USER')
+            UserRole.create(player, userRole, true)
             flash.message = "Registration successful! You may now login."
             redirect(controller: 'login', action: 'auth', params: [username: player.username])
         } else {

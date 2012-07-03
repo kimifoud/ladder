@@ -13,6 +13,8 @@ class User {
 
     String firstName
     String lastName
+    Date dateCreated
+    Date lastUpdated
 
 	static constraints = {
 		username blank: false, unique: true, email: true, maxSize: 50

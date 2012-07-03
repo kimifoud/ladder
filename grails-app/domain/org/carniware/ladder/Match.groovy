@@ -12,6 +12,8 @@ class Match {
     Player winner
     Date played
     String description
+    Date dateCreated
+    Date lastUpdated
 
     static belongsTo = [ladder: Ladder]
     static hasMany = [comments: Comment]
