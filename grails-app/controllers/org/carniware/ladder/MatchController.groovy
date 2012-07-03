@@ -89,6 +89,8 @@ class MatchController {
         }
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'match.label', default: 'Match'), match.id])
-        redirect(action: "show", id: match.id)
+//        redirect(action: "show", id: match.id) // TODO: this
+        redirect(action: "myMatches")
+
     }
 }
