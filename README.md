@@ -19,7 +19,6 @@ TODO:
   - Instructions
   - Basic structure
 - Code
-  - page which shows ladder's recent matches
   - single match view
   - edit own matches within an hour of insert
   - delete own matches within an hour of insert
@@ -28,3 +27,4 @@ TODO:
   - tests
   - Shoutbox!
   - support for multiple ladders
+  - i18n
