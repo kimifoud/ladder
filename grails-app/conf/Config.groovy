@@ -54,7 +54,7 @@ grails.spring.bean.packages = []
 grails.web.disable.multipart = false
 
 // request parameters to mask when logging exceptions
-grails.exceptionresolver.params.exclude = ['password']
+grails.exceptionresolver.params.exclude = ['password', 'j_password']
 
 // enable query caching by default
 grails.hibernate.cache.queries = true
