@@ -8,4 +8,8 @@ class PlayerController {
     def index() {
     }
 
+    def show() {
+
+    }
+
 }

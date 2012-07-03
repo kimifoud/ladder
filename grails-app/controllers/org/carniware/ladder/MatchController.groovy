@@ -99,4 +99,8 @@ class MatchController {
         redirect(action: "myMatches")
 
     }
+
+    def show() {
+
+    }
 }
