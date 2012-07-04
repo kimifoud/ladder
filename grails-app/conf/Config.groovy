@@ -105,3 +105,12 @@ grails.gorm.default.mapping = {
     version true
     autoTimestamp true
 }
+grails.plugins.springsecurity.rememberMe.persistent = true
+grails.plugins.springsecurity.rememberMe.persistentToken.domainClassName = 'org.carniware.ladder.PersistentLogin'
+grails.plugins.springsecurity.rememberMe.cookieName = 'ladder_remember_me'
+grails.plugins.springsecurity.rememberMe.tokenValiditySeconds = 7776000
+grails.plugins.springsecurity.rememberMe.key = 'justanotherladdertokenkey'
+
+
+
+

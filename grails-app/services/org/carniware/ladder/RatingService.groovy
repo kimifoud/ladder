@@ -7,7 +7,7 @@ class RatingService {
     private static final BigDecimal K_WEIGHT_CONSTANT = new BigDecimal(30)
     private static final BigDecimal ONE = new BigDecimal(1)
     private static final BigDecimal TEN = new BigDecimal(10)
-    private static final int FOUR_HUNDRED = new BigDecimal(400)
+    private static final BigDecimal FOUR_HUNDRED = new BigDecimal(400)
 
     enum Result{
         PLAYER1_WINS,

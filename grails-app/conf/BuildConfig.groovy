@@ -36,7 +36,6 @@ grails.project.dependency.resolution = {
         runtime ":cached-resources:1.0"
         runtime ":zipped-resources:1.0"
         runtime ":yui-minify-resources:0.1.5"
-//        compile ":less-resources:1.3.0.2"
 
         runtime ":spring-security-core:1.2.7.3"
         compile ":cache-headers:1.1.5"

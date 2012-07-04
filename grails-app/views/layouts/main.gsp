@@ -30,6 +30,9 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
+            <div id="spinner" class="spinner" style="display:none;">
+                <img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />
+            </div>
             <g:link controller="public" action="index" class="brand">The Ladder<sup> BETA</sup></g:link>
             <div class="nav-collapse">
                 <ul class="nav">
@@ -70,6 +73,8 @@
                                            size="30" placeholder="Username"/>
                                     <input id="password" style="margin-bottom: 15px;" type="password"
                                            name="j_password" size="30" placeholder="Password"/>
+                                    <input type='checkbox' class='checkbox' name='_spring_security_remember_me' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/>
+                                    <label for='remember_me'><g:message code="springSecurity.login.remember.me.label"/></label>
                                     <g:submitButton class="btn btn-primary" name="login"
                                                     style="clear: left; width: 100%; height: 32px; font-size: 13px;"
                                                     value="Sign In"/>
