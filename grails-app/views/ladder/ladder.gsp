@@ -36,7 +36,7 @@
 
 <div class="container">
     <div class="tab-content">
-        <div class="tab-pane active" id="leaderboard">
+        <div class="tab-pane fade in active" id="leaderboard">
             <g:if test="${players.size() > 0}">
                 <table class="table table-striped" id="lb">
                     <thead>
@@ -64,7 +64,7 @@
             </g:else>
         </div>
 
-        <div class="tab-pane" id="matches">
+        <div class="tab-pane fade" id="matches">
             <g:if test="${matches.size() > 0}">
                 <div>
                     <table class="table table-striped">
