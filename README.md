@@ -23,6 +23,7 @@ TODO:
   - player view
   - edit own matches within an hour of insert
   - delete own matches within an hour of insert
+  - ajax pagination to Ladder's matches page
   - navigation
   - comments to matches (and players)
   - tests
