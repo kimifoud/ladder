@@ -117,11 +117,33 @@ class LadderController {
             eq "ladder.id", ladderId
             order("eloRating", "desc")
         }
-        def matches = Match.withCriteria {
+        params.max = Math.min(params.max ? params.int('max') : 5, 100)
+        params.offset = params.offset ? params.int('offset') : 0;
+        def matches = Match.createCriteria().list(max: params.max, offset: params.offset) {
             join "ladder"
             eq "ladder.id", ladderId
             order("id", "desc")
+            maxResults(params.max)
+            firstResult(params.offset)
         }
-        render(view: "ladder", model: [ladder:  ladder, players: players, matches: matches])
+        render(view: "ladder", model: [ladder:  ladder, players: players, matches: matches, matchesTotal: matches.totalCount])
+    }
+
+    /**
+     * For AJAX pagination of ladder's matches.
+     */
+    def matches() {
+        Long ladderId = 1L // TODO: multiple ladders support
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        params.maxSteps = Math.min(params.maxSteps ? params.int('maxSteps') : 0, 10)
+        params.offset = params.offset ? params.int('offset') : 0;
+        def matches = Match.createCriteria().list(max: params.max, offset: params.offset) {
+            join "ladder"
+            eq "ladder.id", ladderId
+            order("id", "desc")
+            maxResults(params.max)
+            firstResult(params.offset)
+        }
+        render(template: 'laddermatches', model: [matches: matches, matchesTotal: matches.totalCount])
     }
 }

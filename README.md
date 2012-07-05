@@ -23,7 +23,6 @@ TODO:
   - player view
   - edit own matches within an hour of insert
   - delete own matches within an hour of insert
-  - ajax pagination to Ladder's matches page
   - navigation
   - comment on matches (and players)
   - tests
@@ -32,6 +31,6 @@ TODO:
   - i18n
   - forgot password functionality
   - front page
-    - shoutbox
-    - latest matches
-    - info
+     - shoutbox
+     - latest matches
+     - info

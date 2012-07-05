@@ -41,6 +41,7 @@ grails.project.dependency.resolution = {
         compile ":cache-headers:1.1.5"
         compile ":twitter-bootstrap:2.0.2.25"
         compile ":fields:1.1"
+        compile ":remote-pagination:0.3"
 
         build ":tomcat:$grailsVersion"
     }
