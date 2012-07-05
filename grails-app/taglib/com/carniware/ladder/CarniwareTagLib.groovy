@@ -7,8 +7,6 @@ class CarniwareTagLib {
     static namespace = "cw"
 
     def ratingChangeBadge = { attrs ->
-//        <span class="badge badge-success"><i class="icon icon-arrow-up"></i> 5</span>
-//        <span class="badge badge-important"><i class="icon icon-arrow-down"></i> 29</span>
         Number change
         Number rating
         try {
@@ -140,7 +138,7 @@ class CarniwareTagLib {
             // display firststep link when beginstep is not firststep
             if (beginstep > firststep) {
                 linkParams.offset = 0
-                writer << '<lli>'
+                writer << '<li>'
                 writer << remoteLink(linkTagAttrs.clone()) {
                     firststep.toString()
                 }
