@@ -11,11 +11,17 @@
                     window.location = href;
                 }
             });
+            $('#matches tr').click(function() {
+                var href = $(this).find("a").attr("href");
+                if(href) {
+                    window.location = href;
+                }
+            });
+            $('#laddertabs a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            })
         });
-        $('#laddertabs a').click(function (e) {
-            e.preventDefault();
-            $(this).tab('show');
-        })
     </g:javascript>
 </head>
 
@@ -28,17 +34,17 @@
 <div>
     <ul id="laddertabs" class="nav nav-tabs">
         <li class="active">
-            <a href="#leaderboard" data-toggle="tab">Leaderboard</a>
+            <a href="#leaderboard_pane" data-toggle="tab">Leaderboard</a>
         </li>
-        <li><a href="#matches" data-toggle="tab">Matches</a></li>
+        <li><a href="#matches_pane" data-toggle="tab">Matches</a></li>
     </ul>
 </div>
 
 <div class="container">
     <div class="tab-content">
-        <div class="tab-pane fade in active" id="leaderboard">
+        <div class="tab-pane fade in active" id="leaderboard_pane">
             <g:if test="${players.size() > 0}">
-                <table class="table table-striped" id="lb">
+                <table class="table table-striped trpointer" id="lb">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -64,10 +70,10 @@
             </g:else>
         </div>
 
-        <div class="tab-pane fade" id="matches">
+        <div class="tab-pane fade" id="matches_pane">
             <g:if test="${matches.size() > 0}">
                 <div>
-                    <table class="table table-striped">
+                    <table class="table table-striped trpointer" id="matches">
                         <thead>
                         <tr>
                             <th>#</th>

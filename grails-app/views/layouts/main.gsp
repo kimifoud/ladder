@@ -30,9 +30,6 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <div id="spinner" class="spinner" style="display:none;">
-                <img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />
-            </div>
             <g:link controller="public" action="index" class="brand">The Ladder<sup> BETA</sup></g:link>
             <div class="nav-collapse">
                 <ul class="nav">
@@ -89,6 +86,9 @@
 </div>
 
 <div class="container" style="padding-top: 60px">
+    <div id="spinner" class="spinner pull-left" style="display:none;">
+        <img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />
+    </div>
     <g:layoutBody/>
     <hr/>
     <footer>

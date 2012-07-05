@@ -1,6 +1,6 @@
 /* own stuff begin */
 
-#matches tr:hover {
+.cursorpointer tr:hover {
     cursor: pointer;
 }
 

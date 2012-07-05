@@ -26,7 +26,7 @@
 </div>
 <g:if test="${matchesTotal > 0}">
     <div>
-        <table class="table table-striped" id="matches">
+        <table class="table table-striped trpointer" id="matches">
             <thead>
             <tr>
                 <th>#</th>
