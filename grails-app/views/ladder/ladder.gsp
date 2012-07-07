@@ -44,7 +44,7 @@
     <div class="tab-content">
         <div class="tab-pane fade in active" id="leaderboard_pane">
             <g:if test="${players.size() > 0}">
-                <table class="table table-striped trpointer" id="lb">
+                <table class="table table-striped cursorpointer" id="lb">
                     <thead>
                     <tr>
                         <th>#</th>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ladder &raquo; <g:layoutTitle default="Welcome"/></title>
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
 
@@ -16,7 +17,12 @@
                 e.stopPropagation();
             });
         });</g:javascript>
-
+    <style type="text/css">
+    body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+    }
+    </style>
     <g:layoutHead/>
     <r:layoutResources/>
 </head>
@@ -85,7 +91,7 @@
     </div>
 </div>
 
-<div class="container" style="padding-top: 60px">
+<div class="container">
     <div id="spinner" class="spinner pull-left" style="display:none;">
         <img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />
     </div>
