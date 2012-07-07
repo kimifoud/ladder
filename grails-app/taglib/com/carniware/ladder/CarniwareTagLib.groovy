@@ -192,4 +192,8 @@ class CarniwareTagLib {
         writer << '</ul>'
     }
 
+    def cancelButton = {
+        out << '<a href="javascript:history.back();" class="btn">Cancel</a>'
+    }
+
 }
