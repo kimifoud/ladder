@@ -143,7 +143,7 @@ class CarniwareTagLib {
                     firststep.toString()
                 }
                 writer << '</li>'
-                writer << '<li>..</li>'
+                writer << '<li class=\"disabled\"><a href=\"#\">..</a></li>'
             }
 
             // display paginate steps
@@ -160,7 +160,7 @@ class CarniwareTagLib {
 
             // display laststep link when endstep is not laststep
             if (endstep < laststep) {
-                writer << '<li>..</li>'
+                writer << '<li class="disabled"><a href="#">..</a></li>'
                 linkParams.offset = (laststep - 1) * max
                 writer << '<li>'
                 writer << remoteLink(linkTagAttrs.clone()) { laststep.toString() }
