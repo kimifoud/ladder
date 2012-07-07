@@ -38,7 +38,9 @@ class MatchController {
 
     def newMatch() {
         def userId = springSecurityService.currentUser.properties["id"]
-        def opponents = Player.findAllByIdNotEqual(userId)
+        def user = User.findById(userId)
+        def ladder = Ladder.findById(1) // TODO current ladder in session or something
+        def opponents = Player.findAllByLadderAndUserNotEqual(ladder, user)
         [match: new Match(params), opponents: opponents]
     }
 
@@ -46,52 +48,60 @@ class MatchController {
         def userId = springSecurityService.currentUser.properties["id"]
         def currentPlayer, selectedOpponent
         if (userId) {
-            currentPlayer = Player.findById(userId)
-            currentPlayer?.password = null
+            def user = User.findById(userId)
+            def ladder = Ladder.findById(1)
+            currentPlayer = Player.findByLadderAndUser(ladder, user)
             currentPlayer?.matches = null
         }
         if (params?.id && params.id != 'null') {
             selectedOpponent = Player.findById(params.id)
-            selectedOpponent.password = null
             selectedOpponent.matches = null
         }
         if (currentPlayer && selectedOpponent) {
             def winners = [currentPlayer, selectedOpponent]
-            render g.select(name: 'winner', optionKey: 'id', optionValue: 'fullName', from: winners, id: 'winner')
+            render g.select(name: 'winner', optionKey: 'id', optionValue: 'name', from: winners, id: 'winner')
         } else {
-            render g.select(name: 'winner', optionKey: 'id', from: ["Select opponent first..."], id: 'winner')
+            render g.select(name: 'winner', from: ["Select opponent first..."], id: 'winner')
         }
     }
 
     def save() {
-        def match = new Match(params)
+        def match = new Match(played: params.played, description: params.description)
         def ladder = Ladder.findById(1) // TODO current ladder in session or something
-        match.ladder = ladder
-        def player1 = Player.findByUsername(springSecurityService.currentUser.properties["username"])
-        if (!player1.ladder) {
-            ladder.addToPlayers(player1)
+
+        def user = User.findByUsername(springSecurityService.currentUser.properties["username"])
+        Player player1
+        if (!user.ladders.contains(ladder)) {
+            player1 = Player.link(user, ladder)
+        } else {
+            player1 = Player.findByUserAndLadder(user, ladder) // TODO use user.ladders relation instead of new fetch
         }
+
+        match.ladder = ladder
         match.player1 = player1
         match.player1rating = player1.eloRating
         def player2 = Player.findById(params.player2)
-        if (!player2.ladder) {
-            ladder.addToPlayers(player2)
-        }
         match.player2 = player2
         match.player2rating = player2.eloRating
         match.winner = Player.findById(params.winner)
+        match.friendly = params.friendly ?: false
         match.validate()
         if (!match.save(flush: true)) {
-            def userId = springSecurityService.currentUser.properties["id"]
-            def opponents = Player.findAllByIdNotEqual(userId)
+            def opponents = Player.findAllByLadderAndUserNotEqual(ladder, user)
             render(view: "newMatch", model: [match: match, opponents: opponents])
             return
         }
-        try {
-            ratingService.calculateNewRatings(player1, player2, match)
-        } catch (Exception e) {
-            log.error("Error calculating ratings.", e)
-            throw new RuntimeException("Crap happened while calculating new ratings.. :'(")
+        if (!match.friendly) {
+            try {
+                ratingService.calculateNewRatings(player1, player2, match)
+            } catch (Exception e) {
+                log.error("Error calculating ratings.", e)
+                throw new RuntimeException("Crap happened while calculating new ratings.. :'(")
+            }
+        } else {
+            match.player1ratingChange = new BigDecimal(0)
+            match.player2ratingChange = new BigDecimal(0)
+            match.save()
         }
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'match.label', default: 'Match'), match.id])

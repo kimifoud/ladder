@@ -7,8 +7,8 @@
 </head>
 
 <body>
-<div class="page-header">
-    <h2>Oh snap, an error!</h2>
+<div class="alert alert-error">
+    <h2>Oh snap, an error occurred! :'(</h2>
 </div>
 <g:renderException exception="${exception}"/>
 </body>

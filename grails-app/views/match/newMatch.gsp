@@ -13,7 +13,7 @@
     <f:with bean="match">
         <f:field property="player2" label="${message(code: 'match.opponent.label')}">
             <g:select
-                    optionKey="id" optionValue="fullName" name="player2" from="${opponents}"
+                    optionKey="id" optionValue="name" name="player2" from="${opponents}"
                     noSelection="${['null': 'Select One...']}"
                     onchange="${remoteFunction(
                             controller: 'match',
@@ -27,6 +27,7 @@
         <f:field property="played">
             <g:datePicker name="played" precision="minute" relativeYears="[0..0]"/>
         </f:field>
+        <f:field property="friendly" class="span3"/>
         <f:field property="description" class="span3"/>
     </f:with>
     <g:submitButton name="submit" value="Submit"/>

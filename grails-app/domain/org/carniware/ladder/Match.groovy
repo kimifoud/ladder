@@ -11,6 +11,7 @@ class Match {
     BigDecimal player2ratingChange
     Player winner
     Date played
+    boolean friendly = false
     String description
     Date dateCreated
     Date lastUpdated

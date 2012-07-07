@@ -57,7 +57,7 @@
                     <g:each var="player" in="${players}">
                         <tr>
                             <td>${counter}</td>
-                            <td><g:link controller="player" action="show" id="${player.id}">${player.fullName}</g:link></td>
+                            <td><g:link controller="player" action="show" id="${player.id}">${player.name}</g:link></td>
                             <td>${player.eloRating}</td>
                         </tr>
                         <g:set var="counter" value="${counter + 1}"/>

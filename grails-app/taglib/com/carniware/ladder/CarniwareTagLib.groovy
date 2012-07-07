@@ -15,11 +15,11 @@ class CarniwareTagLib {
         } catch (Exception e) {
             log.error("cw:ratingChangeBadge was called without valid 'ratingChange' param.")
         }
-        if (change) {
-            def badge = change > 0 ? 'success' : 'error'
-            def direction = change > 0 ? 'up' : 'down'
+        if (change != null) {
+            def badge = change > 0 ? 'badge-success' : change < 0 ? 'badge-error' : ''
+            def direction = change > 0 ? 'up' : change < 0 ? 'down' : 'right'
 
-            out << "<span class=\"badge badge-${badge}\">"
+            out << "<span class=\"badge ${badge}\">"
             if (rating) {
                 out << rating.intValue()
                 out << " "

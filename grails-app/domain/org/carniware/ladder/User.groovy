@@ -16,6 +16,8 @@ class User {
     Date dateCreated
     Date lastUpdated
 
+    static hasMany = [players: Player]
+
 	static constraints = {
 		username blank: false, unique: true, email: true, maxSize: 50
 		password blank: false
@@ -32,6 +34,10 @@ class User {
 	Set<Role> getAuthorities() {
 		UserRole.findAllByUser(this).collect { it.role } as Set
 	}
+
+    Set<Ladder> getLadders() {
+        Player.findAllByUser(this).collect { it.ladder } as Set
+    }
 
 	def beforeInsert() {
 		encodePassword()
