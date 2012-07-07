@@ -1,12 +1,12 @@
 <div>
     <g:if test="${matches.size() > 0}">
-        <table class="table table-striped trpointer" id="matches">
+        <table class="table table-striped cursorpointer fixed-columns" id="matches">
             <thead>
             <tr>
-                <th>#</th>
-                <th>Date</th>
-                <th colspan="2" style="text-align:center">Players</th>
-                <th>Description</th>
+                <th style="width: 7%">#</th>
+                <th style="width: 13%">Date</th>
+                <th style="width: 40%; text-align:center" colspan="2">Players</th>
+                <th style="width: 40%">Description</th>
             </tr>
             </thead>
             <tbody>

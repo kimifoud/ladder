@@ -117,7 +117,7 @@ class LadderController {
             eq "ladder.id", ladderId
             order("eloRating", "desc")
         }
-        params.max = Math.min(params.max ? params.int('max') : 2, 100)
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
         params.offset = params.offset ? params.int('offset') : 0;
         def matches = Match.createCriteria().list(max: params.max, offset: params.offset) {
             join "ladder"

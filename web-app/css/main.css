@@ -4,6 +4,9 @@
     cursor: pointer;
 }
 
+.fixed-columns table { table-layout: fixed; }
+.fixed-columns table th, table td { overflow: hidden; }
+
 .paginateButtons {
     background: #fff url(../images/skin/shadow.jpg) bottom repeat-x;
     border: 1px solid #ccc;
