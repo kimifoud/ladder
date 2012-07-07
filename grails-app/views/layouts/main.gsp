@@ -34,14 +34,14 @@
             <div class="nav-collapse">
                 <ul class="nav">
                     <li ${controllerName in ['public', 'home', 'login'] ? 'class="active"' : ''}><g:link
-                            controller="public">Home</g:link></li>
+                            controller="public"><i class="icon icon-home icon-white"></i> Home</g:link></li>
                     <sec:ifLoggedIn>
                         <li ${controllerName in ['match'] ? 'class="active"' : ''}><g:link
-                                controller="match" action="myMatches">My matches</g:link></li>
+                                controller="match" action="myMatches"><i class="icon icon-th-list icon-white"></i> My matches</g:link></li>
                         <li ${controllerName in ['ladder'] ? 'class="active"' : ''}><g:link
-                                controller="ladder" action="leaderboard">Ladder</g:link></li>
+                                controller="ladder" action="leaderboard"><i class="icon icon-align-justify icon-white"></i> Ladder</g:link></li>
                     </sec:ifLoggedIn>
-                    <li ${controllerName in ['about'] ? 'class="active"' : ''}><g:link uri="#">About</g:link></li>
+                    <li ${controllerName in ['about'] ? 'class="active"' : ''}><g:link uri="#"><i class="icon icon-info-sign icon-white"></i> About</g:link></li>
                 </ul>
                 <ul class="nav pull-right">
                     <sec:ifLoggedIn>
@@ -51,7 +51,7 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><g:link controller="player"><i class="icon-user"></i> Profile</g:link></li>
+                                <li><g:link controller="player"><i class="icon-cog"></i> Profile</g:link></li>
                                 <li class="divider"/>
                                 <li><g:link controller="logout"><i class="icon-off"></i> Sign Out</g:link></li>
                             </ul>
