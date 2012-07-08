@@ -20,6 +20,12 @@
     <h1>My matches</h1>
 </div>
 
+<div id="alert-area"></div>
+
+<g:if test="${flash.message}">
+    <g:javascript>newAlert('success', '${flash.message}');</g:javascript>
+</g:if>
+
 <div class="navbar">
     <g:link class="btn" action="newMatch"><i class="icon-plus-sign"></i> <g:message code="match.new.label"
                                                                                     default="New match"/></g:link>

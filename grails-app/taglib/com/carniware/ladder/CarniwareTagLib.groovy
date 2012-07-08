@@ -28,6 +28,58 @@ class CarniwareTagLib {
         }
     }
 
+    def ratingBadge = { attrs ->
+        Number rating
+        try {
+            rating = attrs?.rating
+        } catch (Exception e) {
+            log.error("cw:ratingBadge was called without valid 'rating' param.")
+        }
+        if (rating) {
+            out << "<span class=\"badge badge-info\">"
+            out << rating.intValue()
+            out << "</span>"
+        }
+    }
+
+    def dateFromNow = { attrs ->
+        def date = attrs.date
+        def niceDate = getNiceDate(date)
+        out << niceDate
+    }
+
+    static String getNiceDate(Date date) {
+        def now = new Date()
+        def diff = Math.abs(now.time - date.time)
+        final long second = 1000
+        final long minute = second * 60
+        final long hour = minute * 60
+        final long day = hour * 24
+        def niceTime = ""
+        long calc = 0;
+        calc = Math.floor(diff / day)
+        if (calc) {
+            niceTime += calc + " day" + (calc > 1 ? "s " : " ")
+            diff %= day
+        }
+        calc = Math.floor(diff / hour)
+        if (calc) {
+            niceTime += calc + " hour" + (calc > 1 ? "s " : " ")
+            diff %= hour
+        }
+        calc = Math.floor(diff / minute)
+        if (calc) {
+            niceTime += calc + " minute" + (calc > 1 ? "s " : " ")
+            diff %= minute
+        }
+        if (!niceTime) {
+            niceTime = "Right now"
+        } else {
+            niceTime += (date.time > now.time) ? " from now" : " ago"
+        }
+        return niceTime
+    }
+
     def bd = { attrs ->
         BigDecimal number
         int scale = 0
@@ -74,7 +126,7 @@ class CarniwareTagLib {
         Integer max = params.max?.toInteger()
         Integer maxsteps = params.maxsteps?.toInteger()
         def pageSizes = attrs.pageSizes ?: []
-        Boolean alwaysShowPageSizes = new Boolean(attrs.alwaysShowPageSizes?:false)
+        Boolean alwaysShowPageSizes = new Boolean(attrs.alwaysShowPageSizes ?: false)
         Map linkTagAttrs = attrs
 
 
@@ -180,14 +232,14 @@ class CarniwareTagLib {
 
         if ((alwaysShowPageSizes || total > max) && pageSizes) {
             selectParams.remove("max")
-            selectParams.offset=0
+            selectParams.offset = 0
             String paramsStr = selectParams.collect {it.key + "=" + it.value}.join("&")
             paramsStr = '\'' + paramsStr + '&max=\' + this.value'
             linkTagAttrs.params = paramsStr
             Boolean isPageSizesMap = pageSizes instanceof Map
 
-            writer << "<li>" + select(from: pageSizes, value: max, name: "max", onchange: "${remoteFunction(linkTagAttrs.clone())}" ,class: 'remotepagesizes',
-                    optionKey: isPageSizesMap?'key':'', optionValue: isPageSizesMap?'value':'') + "</li>"
+            writer << "<li>" + select(from: pageSizes, value: max, name: "max", onchange: "${remoteFunction(linkTagAttrs.clone())}", class: 'remotepagesizes',
+                    optionKey: isPageSizesMap ? 'key' : '', optionValue: isPageSizesMap ? 'value' : '') + "</li>"
         }
         writer << '</ul>'
     }
@@ -196,4 +248,27 @@ class CarniwareTagLib {
         out << '<a href="javascript:history.back();" class="btn">Cancel</a>'
     }
 
+    def matchResultString = { attrs ->
+        def friendly = attrs.friendly
+        Number p1rc = attrs.p1rc
+        def p1name = attrs.p1name
+        Number p2rc = attrs.p2rc
+        def p2name = attrs.p2name
+
+        if (friendly) {
+            out << 'Friendly match. No changes in ratings.'
+        } else if (p1rc == 0 && p2rc == 0) {
+            out << 'No changes in ratings.'
+        } else {
+            out << p1name
+            def p1 = p1rc < 0 ? ' loses ' : ' gains '
+            out << p1
+            out << p1rc.abs().intValue() + ' rating. '
+
+            out << p2name
+            def p2 = p2rc < 0 ? ' loses ' : ' gains '
+            out << p2
+            out << p2rc.abs().intValue() + ' rating. '
+        }
+    }
 }

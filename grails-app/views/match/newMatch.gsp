@@ -12,6 +12,13 @@
 
 <div class="row">
     <div class="span6">
+        <g:if test="${flash.message}">
+            <div class="alert alert-error">
+                <a class="close" data-dismiss="alert" href="#">×</a>
+                <h4 class="alert-heading">Error!</h4>
+                ${flash.message}
+            </div>
+        </g:if>
         <g:form controller="match" action="save">
             <f:with bean="match">
                 <f:field property="player2" label="${message(code: 'match.opponent.label')}">

@@ -111,7 +111,7 @@ class LadderController {
 
     def leaderboard() {
         Long ladderId = 1L // TODO: multiple ladders support
-        def ladder = Ladder.findById(ladderId)
+        def ladder = Ladder.get(ladderId)
         def players = Player.withCriteria {
             join "ladder"
             eq "ladder.id", ladderId

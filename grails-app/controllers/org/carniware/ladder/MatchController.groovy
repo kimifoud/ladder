@@ -38,8 +38,8 @@ class MatchController {
 
     def newMatch() {
         def userId = springSecurityService.currentUser.properties["id"]
-        def user = User.findById(userId)
-        def ladder = Ladder.findById(1) // TODO current ladder in session or something
+        def user = User.get(userId)
+        def ladder = Ladder.get(1) // TODO current ladder in session or something
         def opponents = Player.findAllByLadderAndUserNotEqual(ladder, user)
         [match: new Match(params), opponents: opponents]
     }
@@ -48,13 +48,13 @@ class MatchController {
         def userId = springSecurityService.currentUser.properties["id"]
         def currentPlayer, selectedOpponent
         if (userId) {
-            def user = User.findById(userId)
-            def ladder = Ladder.findById(1)
+            def user = User.get(userId)
+            def ladder = Ladder.get(1)
             currentPlayer = Player.findByLadderAndUser(ladder, user)
             currentPlayer?.matches = null
         }
         if (params?.id && params.id != 'null') {
-            selectedOpponent = Player.findById(params.id)
+            selectedOpponent = Player.get(params.id)
             selectedOpponent.matches = null
         }
         if (currentPlayer && selectedOpponent) {
@@ -67,7 +67,7 @@ class MatchController {
 
     def save() {
         def match = new Match(played: params.played, description: params.description)
-        def ladder = Ladder.findById(1) // TODO current ladder in session or something
+        def ladder = Ladder.get(1) // TODO current ladder in session or something
 
         def user = User.findByUsername(springSecurityService.currentUser.properties["username"])
         Player player1
@@ -80,14 +80,15 @@ class MatchController {
         match.ladder = ladder
         match.player1 = player1
         match.player1rating = player1.eloRating
-        def player2 = Player.findById(params.player2)
+        def player2 = Player.get(params.player2)
         match.player2 = player2
         match.player2rating = player2.eloRating
-        match.winner = Player.findById(params.winner)
+        match.winner = Player.get(params.winner)
         match.friendly = params.friendly ?: false
         match.validate()
         if (!match.save(flush: true)) {
             def opponents = Player.findAllByLadderAndUserNotEqual(ladder, user)
+            flash.message = message(code: 'match.save.error.default', default: 'Error saving match.')
             render(view: "newMatch", model: [match: match, opponents: opponents])
             return
         }
@@ -105,12 +106,47 @@ class MatchController {
         }
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'match.label', default: 'Match'), match.id])
-//        redirect(action: "show", id: match.id) // TODO: this
-        redirect(action: "myMatches")
+        redirect(action: "show", id: match.id)
 
     }
 
     def show() {
+        def match = Match.get(params.id)
+        if (!match) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'match.label', default: 'Match'), params.id])
+            redirect(action: "myMatches")
+            return
+        }
+        [match: match, deletable: isMatchDeletable(match)]
+    }
 
+    private boolean isMatchDeletable(Match match) {
+        def currentUser = springSecurityService.currentUser
+        Calendar cal = Calendar.getInstance()
+        cal.setTime(match.dateCreated)
+        cal.add(Calendar.HOUR_OF_DAY, 1)
+        def latestDeleteTime = cal.getTime()
+        def deletable = (match.player1.user == currentUser || match.player2.user == currentUser) && new Date().before(latestDeleteTime)
+        deletable
+    }
+
+    def remove() {
+        def match = Match.get(params.id)
+        if (!match) {
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'match.label', default: 'Match'), params.id])
+            redirect(action: "myMatches")
+            return
+        }
+        if (!isMatchDeletable(match)) {
+            flash.message = message(code: 'match.not.deletable.message', default: 'This match cannot be deleted anymore. Deal with it.')
+            redirect(action: "myMatches")
+            return
+        }
+        match.player1.eloRating = match.player1.eloRating.subtract(match.player1ratingChange)
+        match.player2.eloRating = match.player2.eloRating.subtract(match.player2ratingChange)
+
+        match.delete()
+        flash.message = message(code: 'match.deleted.message', default: 'Match deleted.')
+        redirect(action: "myMatches")
     }
 }
