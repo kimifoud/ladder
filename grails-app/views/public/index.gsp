@@ -13,7 +13,6 @@
     <p>In order to use this marvelous application, you will have to <g:link controller="register"
                                                                             action="index">register</g:link> and/or <g:link
             controller="login" params="[activeLogin: 'true']">login</g:link>.</p>
-        <p>TODO: tell the kind visitor what this site is about</p>
 </div>
 
 </body>

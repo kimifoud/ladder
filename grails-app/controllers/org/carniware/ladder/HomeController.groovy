@@ -5,9 +5,10 @@ import grails.plugins.springsecurity.Secured
 @Secured(['ROLE_USER'])
 class HomeController {
 
-    def index() { }
+    def matchService
 
-    @Secured(['ROLE_ADMIN'])
-    def adminOnly() { render 'only admin can see this..'}
+    def index() {
+        [latestMatches: matchService.latestMatches()]
+    }
 
 }

@@ -32,5 +32,4 @@ TODO:
   - forgot password functionality
   - front page
      - shoutbox
-     - latest matches
      - info

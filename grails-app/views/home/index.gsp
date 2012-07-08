@@ -9,10 +9,12 @@
 <div class="hero-unit">
     <h1>Ladder application</h1>
 
-    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam at pellentesque lacus. In nec egestas turpis. Fusce eget tempus justo. Phasellus id massa et dui scelerisque viverra quis nec tellus. Donec felis dui, tristique a pulvinar at, posuere a nunc. Cras mattis feugiat augue, sit amet tristique ante vestibulum id. Proin suscipit luctus eros ut molestie. Pellentesque dictum fringilla semper.</p>
 </div>
+
 <div class="row">
-    <div class="span6"><div class="well"><p>TODO: latest matches</p></div></div>
+    <div class="span6"><div class="well"><g:render template="latestMatches" model="${latestMatches}"/></div></div>
+
     <div class="span6"><div class="well"><p>TODO: shoutbox</p></div></div>
 </div>
 </body>
