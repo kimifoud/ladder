@@ -9,8 +9,9 @@ if (typeof jQuery !== 'undefined') {
 }
 
 function newAlert(type, message) {
-    $("#alert-area").append($("<div class='alert-message alert alert-" + type + " fade in' data-alert> " + message + " </div>"));
-    $(".alert-message").delay(3000).fadeOut("slow", function () {
+    $("#alert-area").append($("<div class='alert-message alert alert-" + type + " fade in' data-alert><strong> " + message + " </strong></div>"));
+    $(".alert-message").delay(5000).fadeTo(500, 0).slideUp(500, function () {
         $(this).remove();
     });
+
 }
