@@ -3,6 +3,30 @@
     <meta name='layout' content='main'/>
     <r:require modules="application"/>
     <title>Home</title>
+    <g:javascript>
+        var cnt = 0;
+        $(document).ready(function () {
+            setTimeout(function () {
+                ajaxFetchShouts()
+            }, 5000);
+        });
+
+        function ajaxFetchShouts() {
+            $.ajax({
+                url: '/ladder/shout/ajaxFetchLatest',
+                dataType: 'html',
+                success:function (data) {
+                    $('#shouts').html(data);
+                    if (cnt < 40) { // poll for 40*15 seconds = 10 minutes
+                        cnt++;
+                        setTimeout(function () {
+                            ajaxFetchShouts()
+                        }, 5000);
+                    }
+                }
+            });
+        }
+    </g:javascript>
 </head>
 
 <body>
@@ -17,8 +41,8 @@
 
     <div class="span6">
         <div class="well" id="shoutbox">
-            <g:formRemote id="shoutForm" name="shoutForm" url="[controller: 'shout', action: 'ajaxSave']" method="POST" update="shouts" before="disableShout()" after="enableShout()" onSuccess="clearForm('#shoutForm')">
-                <input type="text" name="shout_" id="shout_" />
+            <g:formRemote id="shoutForm" name="shoutForm" url="[controller: 'shout', action: 'ajaxSave']" method="POST" update="shouts" before="disableShout()" after="enableShout()" onSuccess="clearForm('#shoutForm')" style="margin-bottom: 5px">
+                <input class="span5" name="shout_" id="shout_" size="16" type="text">
                 <input type="submit" value="Shout!" id="shoutBtn" />
                 <g:hiddenField name="shout" id="shout" />
             </g:formRemote>

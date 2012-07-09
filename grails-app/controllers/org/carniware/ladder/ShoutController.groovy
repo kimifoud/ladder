@@ -9,8 +9,6 @@ class ShoutController {
 
     def springSecurityService
 
-
-
     def ajaxSave() {
         def shout = new Shout(params)
         shout.shouter = springSecurityService.currentUser
