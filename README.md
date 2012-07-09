@@ -31,5 +31,5 @@ TODO:
   - error messages
   - forgot password functionality
   - front page
-     - shoutbox
+     - automatic shoutbox updating with polling
      - info

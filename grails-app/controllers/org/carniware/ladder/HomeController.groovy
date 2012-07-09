@@ -8,7 +8,7 @@ class HomeController {
     def matchService
 
     def index() {
-        [latestMatches: matchService.latestMatches()]
+        [latestMatches: matchService.latestMatches(), shouts: Shout.list(max: 25)]
     }
 
 }

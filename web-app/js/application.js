@@ -15,3 +15,31 @@ function newAlert(type, message) {
     });
 
 }
+
+function clearForm(ele) {
+    $(ele).find(':input').each(function() {
+        switch(this.type) {
+            case 'password':
+            case 'select-multiple':
+            case 'select-one':
+            case 'text':
+            case 'textarea':
+                $(this).val('');
+                break;
+            case 'checkbox':
+            case 'radio':
+                this.checked = false;
+        }
+    });
+
+}
+
+function disableShout() {
+    $('#shout').val($('#shout_').val());
+    $('#shout_').attr('disabled', 'disabled');
+    $('#shoutBtn').attr('disabled', 'disabled');
+}
+
+function enableShout() {
+    setTimeout(function() {$('#shout_').removeAttr('disabled'); $('#shoutBtn').removeAttr('disabled'); $('#shout_').focus();}, 5000);
+}

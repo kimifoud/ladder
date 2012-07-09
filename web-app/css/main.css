@@ -28,6 +28,11 @@
     padding: 2px 3px;
 }
 
+.scrollableShouts {
+    height: 150px;
+    overflow: auto;
+}
+
 /* own stuff end */
 
 /* FONT STACK */

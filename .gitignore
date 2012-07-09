@@ -8,3 +8,11 @@ target
 /plugins
 /web-app/plugins
 /web-app/WEB-INF/classes
+.classpath
+.idea/
+logs/
+.project
+caldecott.log
+caldecott.log
+ladder.iml
+ladder-grailsPlugins.iml
