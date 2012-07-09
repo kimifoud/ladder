@@ -1,6 +1,7 @@
 package org.carniware.ladder
 
 import grails.plugins.springsecurity.Secured
+import org.hibernate.FetchMode
 
 @Secured(['ROLE_USER'])
 class MatchController {
@@ -16,11 +17,17 @@ class MatchController {
         def max = params.max?.isInteger() ? params.max as int : 5;
         def criteria = Match.createCriteria()
         def matches = criteria.list {
-            join "player1"
-            join "player2"
             or {
-                eq("player1.id", userId)
-                eq("player2.id", userId)
+                player1 {
+                    user {
+                        eq("id", userId)
+                    }
+                }
+                player2 {
+                    user {
+                        eq("id", userId)
+                    }
+                }
             }
             maxResults(max)
             firstResult(offset)
@@ -29,8 +36,16 @@ class MatchController {
         def criteria2 = Match.createCriteria()
         def matchesCount = criteria2.count {
             or {
-                eq("player1.id", userId)
-                eq("player2.id", userId)
+                player1 {
+                    user {
+                        eq("id", userId)
+                    }
+                }
+                player2 {
+                    user {
+                        eq("id", userId)
+                    }
+                }
             }
         }
         [matches: matches, matchesTotal: matchesCount]

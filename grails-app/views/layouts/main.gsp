@@ -92,9 +92,9 @@
 </div>
 
 <div class="container">
-    <div id="spinner" class="spinner pull-left" style="display:none;">
-        <img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />
-    </div>
+    %{--<div id="spinner" class="spinner pull-left" style="display:none;">--}%
+        %{--<img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />--}%
+    %{--</div>--}%
     <g:layoutBody/>
     <hr/>
     <footer>
