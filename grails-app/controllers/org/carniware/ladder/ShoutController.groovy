@@ -12,15 +12,15 @@ class ShoutController {
     def ajaxSave() {
         def shout = new Shout(params)
         shout.shouter = springSecurityService.currentUser
-        def lastShout = Shout.findAllByShouter(shout.shouter, [max: 1])
-        if (lastShout && System.currentTimeMillis() - lastShout.dateCreated.time < 5000) {
-            render("<p>Cannot shout more often than every 5 seconds...</p>")
+        if (session["lastShout"] && System.currentTimeMillis() - session["lastShout"] < 5000) {
+            render('<div class="alert alert-error">Cannot shout more often than every 5 seconds...</div>')
             return
         }
         if (shout.save()) {
+            session["lastShout"] = shout.dateCreated.time
             forward(action: 'ajaxFetchLatest')
         } else {
-            render('<p>Error saving shout...</p>')
+            render('<div class="alert alert-error">Error saving shout...</div>')
         }
     }
 

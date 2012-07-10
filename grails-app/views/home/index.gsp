@@ -17,7 +17,7 @@
                 dataType: 'html',
                 success:function (data) {
                     $('#shouts').html(data);
-                    if (cnt < 40) { // poll for 40*15 seconds = 10 minutes
+                    if (cnt < 60) { // poll for 60*5 seconds = 5 minutes
                         cnt++;
                         setTimeout(function () {
                             ajaxFetchShouts()
@@ -41,7 +41,7 @@
 
     <div class="span6">
         <div class="well" id="shoutbox">
-            <g:formRemote id="shoutForm" name="shoutForm" url="[controller: 'shout', action: 'ajaxSave']" method="POST" update="shouts" before="disableShout()" after="enableShout()" onSuccess="clearForm('#shoutForm')" style="margin-bottom: 5px">
+            <g:formRemote id="shoutForm" name="shoutForm" url="[controller: 'shout', action: 'ajaxSave']" method="POST" update="shouts" before="disableShout()" after="enableShout(); cnt = 0" onSuccess="clearForm('#shoutForm')" style="margin-bottom: 5px">
                 <input class="span5" name="shout_" id="shout_" size="16" type="text">
                 <input type="submit" value="Shout!" id="shoutBtn" />
                 <g:hiddenField name="shout" id="shout" />
