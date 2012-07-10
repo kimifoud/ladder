@@ -47,7 +47,7 @@
                         <li ${controllerName in ['ladder'] ? 'class="active"' : ''}><g:link
                                 controller="ladder" action="leaderboard"><i class="icon icon-align-justify icon-white"></i> Ladder</g:link></li>
                     </sec:ifLoggedIn>
-                    <li ${controllerName in ['about'] ? 'class="active"' : ''}><g:link uri="#"><i class="icon icon-info-sign icon-white"></i> About</g:link></li>
+                    <li ${controllerName in ['about'] ? 'class="active"' : ''}><g:link uri="#"><i class="icon icon-flag icon-white"></i> About</g:link></li>
                 </ul>
                 <ul class="nav pull-right">
                     <sec:ifLoggedIn>
@@ -76,8 +76,9 @@
                                            size="30" placeholder="Username"/>
                                     <input id="password" style="margin-bottom: 15px;" type="password"
                                            name="j_password" size="30" placeholder="Password"/>
-                                    <input type='checkbox' class='checkbox' name='_spring_security_remember_me' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/>
-                                    <label for='remember_me'><g:message code="springSecurity.login.remember.me.label"/></label>
+                                    <label for='remember_me' class='checkbox'>
+                                    <input type='checkbox' class='checkbox' name='_spring_security_remember_me' id='remember_me' checked='true'/>
+                                    <g:message code="springSecurity.login.remember.me.label"/></label>
                                     <g:submitButton class="btn btn-primary" name="login"
                                                     style="clear: left; width: 100%; height: 32px; font-size: 13px;"
                                                     value="Sign In"/>
