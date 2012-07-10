@@ -54,7 +54,8 @@ class User {
 	}
 
     String toString() {
-        return firstName + " " + lastName
+        def ret = firstName + " " + lastName
+        return ret.encodeAsHTML()
     }
 
     String getFullName() {
