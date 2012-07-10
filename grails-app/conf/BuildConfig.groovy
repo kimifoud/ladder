@@ -42,6 +42,7 @@ grails.project.dependency.resolution = {
         compile ":twitter-bootstrap:2.0.2.25"
         compile ":fields:1.1"
         compile ":remote-pagination:0.3"
+        compile ":quartz:1.0-RC2"
 
         build ":tomcat:$grailsVersion"
     }
