@@ -13,7 +13,7 @@
 
         function ajaxFetchShouts() {
             $.ajax({
-                url: '/ladder/shout/ajaxFetchLatest',
+                url: '${createLink(controller: 'shout', action: 'ajaxFetchLatest')}',
                 dataType: 'html',
                 success:function (data) {
                     $('#shouts').html(data);

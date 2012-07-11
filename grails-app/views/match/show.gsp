@@ -28,7 +28,7 @@
                                                 p2rc="${match.player2ratingChange}" p2name="${match.player2.name}"
                                                 friendly="${match.friendly}"/></p>
 
-        <p><b>Description:</b> ${match.description}</p>
+        <p><b>Description:</b> ${match.description.encodeAsHTML()}</p>
         </div>
         <g:if test="${deletable}">
             <div class="span6">
