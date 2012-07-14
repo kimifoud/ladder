@@ -35,6 +35,7 @@ class Match {
     }
 
     static mapping = {
+        table 'matches'
         player1 fetch: 'join'
         player2 fetch: 'join'
         winner fetch: 'join'
