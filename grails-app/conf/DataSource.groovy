@@ -23,20 +23,6 @@ environments {
             driverClassName = "com.mysql.jdbc.Driver"
             dialect = org.hibernate.dialect.MySQL5InnoDBDialect
             jndiName = "java:comp/env/jdbc/ladder_test"
-            properties {
-                minEvictableIdleTimeMillis = 900000
-                timeBetweenEvictionRunsMillis = 900000
-                numTestsPerEvictionRun = 3
-                testOnBorrow = true
-                testWhileIdle = true
-                testOnReturn = true
-                validationQuery = "SELECT 1"
-                maxActive = 100
-                minIdle = 1
-                maxIdle = 8
-                initialSize = 8
-                maxWait = 10000
-            }
         }
     }
     production {
@@ -45,20 +31,6 @@ environments {
             driverClassName = "com.mysql.jdbc.Driver"
             dialect = org.hibernate.dialect.MySQL5InnoDBDialect
             jndiName = "java:comp/env/jdbc/ladder"
-            properties {
-                minEvictableIdleTimeMillis = 900000
-                timeBetweenEvictionRunsMillis = 900000
-                numTestsPerEvictionRun = 3
-                testOnBorrow = true
-                testWhileIdle = true
-                testOnReturn = true
-                validationQuery = "SELECT 1"
-                maxActive = 100
-                minIdle = 1
-                maxIdle = 8
-                initialSize = 8
-                maxWait = 10000
-            }
         }
     }
 }
