@@ -1,4 +1,4 @@
-
+import org.apache.log4j.DailyRollingFileAppender
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
@@ -72,12 +72,10 @@ environments {
 
 // log4j configuration
 log4j = {
-    // Example of changing the log pattern for the default console
-    // appender:
-    //
-    //appenders {
-    //      console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    appenders {
+        console name: 'stdout', layout: pattern(conversionPattern: '%c{2} %m%n')
+        appender new DailyRollingFileAppender(name: "daily", datePattern: "'.'yyyy-MM-dd", layout: pattern(conversionPattern: '%d %-5p [%c{2}] %m%n'), file: "logs/ladder.log");
+    }
 
     error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
             'org.codehaus.groovy.grails.web.pages', //  GSP
@@ -91,7 +89,10 @@ log4j = {
             'org.hibernate',
             'net.sf.ehcache.hibernate'
 
+    warn 'org.mortbay.log'
+
     debug 'grails.app.jobs'
+    debug 'org.carniware'
 }
 
 // Added by the Spring Security Core plugin:
@@ -113,6 +114,7 @@ grails.plugins.springsecurity.rememberMe.cookieName = 'ladder_remember_me'
 grails.plugins.springsecurity.rememberMe.tokenValiditySeconds = 7776000
 grails.plugins.springsecurity.rememberMe.key = 'justanotherladdertokenkey'
 
+grails.app.context = "/"
 
 
 

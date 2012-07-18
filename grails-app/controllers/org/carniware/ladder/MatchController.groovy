@@ -81,7 +81,7 @@ class MatchController {
     }
 
     def save() {
-        def match = new Match(played: params.played, description: params.description)
+        def match = new Match(description: params.description)
         def ladder = Ladder.get(1) // TODO current ladder in session or something
 
         def user = User.findByUsername(springSecurityService.currentUser.properties["username"])
@@ -99,6 +99,7 @@ class MatchController {
         match.player2 = player2
         match.player2rating = player2.eloRating
         match.winner = Player.get(params.winner)
+        match.played = new Date()
         match.friendly = params.friendly ?: false
         match.validate()
         if (!match.save(flush: true)) {

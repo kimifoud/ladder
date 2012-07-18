@@ -1,6 +1,7 @@
 package com.carniware.ladder
 
 import org.springframework.web.servlet.support.RequestContextUtils
+import org.apache.commons.lang.time.DateUtils
 
 class CarniwareTagLib {
 
@@ -44,6 +45,11 @@ class CarniwareTagLib {
 
     def dateFromNow = { attrs ->
         def date = attrs.date
+        def shortFormat = attrs.format?.equals("short")
+        if (shortFormat && !DateUtils.isSameDay(date, new Date())) {
+            out << g.formatDate(date: date, format: "E, dd.MM.")
+            return
+        }
         def niceDate = getNiceDate(date)
         out << niceDate
     }

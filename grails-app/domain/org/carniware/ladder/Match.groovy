@@ -28,7 +28,6 @@ class Match {
         winner(validator: { val, obj ->
             obj.player1 == val || obj.player2 == val
         })
-        played(max: new Date()+1, min: new Date()-7)
         description(blank: true, maxSize: 200)
         player1ratingChange(nullable: true)
         player2ratingChange(nullable: true)

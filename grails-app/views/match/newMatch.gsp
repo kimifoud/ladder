@@ -34,9 +34,6 @@
                 <f:field property="winner">
                     <g:select name="winner" id="winner" from="['Select opponent first...']"/>
                 </f:field>
-                <f:field property="played">
-                    <g:datePicker name="played" precision="minute" relativeYears="[0..0]"/>
-                </f:field>
                 <f:field property="friendly" class="span3"/>
                 <f:field property="description" class="span3"/>
             </f:with>

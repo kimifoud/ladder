@@ -10,8 +10,7 @@ import grails.util.Environment
 class BootStrap {
 
     def init = { servletContext ->
-
-        switch (GrailsUtil.environment) {
+        switch (Environment.current) {
             case Environment.DEVELOPMENT:
                 def roleUser = Role.findByAuthority('ROLE_USER') ?: new Role(authority: 'ROLE_USER').save(failOnError: true)
                 def roleAdmin = Role.findByAuthority('ROLE_ADMIN') ?: new Role(authority: 'ROLE_ADMIN').save(failOnError: true)

@@ -12,7 +12,7 @@
             <g:each var="match" in="${latestMatches}">
                 <tr>
                     <td><g:link controller="match" action="show" id="${match.id}"><cw:dateFromNow
-                            date="${match.played}"/></g:link></td>
+                            date="${match.played}" format="short" /></g:link></td>
                     <td style="text-align:right"><g:link controller="player" action="show"
                                                          id="${match.player1.id}">${match.player1}</g:link> <cw:ratingChangeBadge
                             rating="${match.player1rating}" ratingChange="${match.player1ratingChange}"/></td>
