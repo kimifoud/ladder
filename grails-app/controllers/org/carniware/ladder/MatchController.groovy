@@ -1,7 +1,6 @@
 package org.carniware.ladder
 
 import grails.plugins.springsecurity.Secured
-import org.hibernate.FetchMode
 
 @Secured(['ROLE_USER'])
 class MatchController {
@@ -61,7 +60,8 @@ class MatchController {
 
     def ajaxGetWinnersSelect = {
         def userId = springSecurityService.currentUser.properties["id"]
-        def currentPlayer, selectedOpponent
+        def currentPlayer = null
+        def selectedOpponent = null
         if (userId) {
             def user = User.get(userId)
             def ladder = Ladder.get(1)
@@ -95,10 +95,15 @@ class MatchController {
         match.ladder = ladder
         match.player1 = player1
         match.player1rating = player1.eloRating
-        def player2 = Player.get(params.player2)
+        def player2 = null
+        if (params.player2?.isLong()) {
+            player2 = Player.get(params.player2)
+        }
         match.player2 = player2
-        match.player2rating = player2.eloRating
-        match.winner = Player.get(params.winner)
+        match.player2rating = player2?.eloRating
+        if (params.winner?.isLong()) {
+            match.winner = Player.get(params.winner)
+        }
         match.played = new Date()
         match.friendly = params.friendly ?: false
         match.validate()
