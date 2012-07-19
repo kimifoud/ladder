@@ -1,4 +1,6 @@
 import org.apache.log4j.DailyRollingFileAppender
+import org.apache.log4j.rolling.RollingFileAppender
+import org.apache.log4j.rolling.TimeBasedRollingPolicy
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
@@ -66,15 +68,26 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
+        grails.serverURL = "http://ladder.lovebo.at"
     }
 }
 
 // log4j configuration
 log4j = {
+    def rollingFile = new RollingFileAppender(name: 'rollingFileAppender', layout: pattern(conversionPattern: "%d [%t] %-5p %c{2} %x - %m%n"))
+    // Rolling policy where log filename is logs/app.log.
+    // Rollover each day, compress and save in logs/backup directory.
+    def rollingPolicy = new TimeBasedRollingPolicy(fileNamePattern: 'logs/backup/ladder.%d{yyyy-MM-dd}.gz', activeFileName: 'logs/ladder.log')
+    rollingPolicy.activateOptions()
+    rollingFile.setRollingPolicy rollingPolicy
+
     appenders {
-        console name: 'stdout', layout: pattern(conversionPattern: '%c{2} %m%n')
-        appender new DailyRollingFileAppender(name: "daily", datePattern: "'.'yyyy-MM-dd", layout: pattern(conversionPattern: '%d %-5p [%c{2}] %m%n'), file: "logs/ladder.log");
+        appender rollingFile
+    }
+
+    root {
+        // Use our newly created appender.
+        debug 'rollingFileAppender'
     }
 
     error 'org.codehaus.groovy.grails.web.servlet',  //  controllers

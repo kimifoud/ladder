@@ -32,8 +32,13 @@
 <body>
 <div class="hero-unit">
     <h1>Ladder application</h1>
-
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam at pellentesque lacus. In nec egestas turpis. Fusce eget tempus justo. Phasellus id massa et dui scelerisque viverra quis nec tellus. Donec felis dui, tristique a pulvinar at, posuere a nunc. Cras mattis feugiat augue, sit amet tristique ante vestibulum id. Proin suscipit luctus eros ut molestie. Pellentesque dictum fringilla semper.</p>
+    <p>A <a href="http://www.grails.org">Grails</a> application for recording played pool matches to find out how good the M$ guys really are.</p>
+    <ul>
+    <li><b>Rules</b>: <a href="http://www.sbil.fi/published_files/dbf1037.pdf">http://www.sbil.fi/published_files/dbf1037.pdf</a> (3. Kasipallo)</li>
+    <li><b>Beta</b>: During the beta stage all saved data may (or may not) be deleted at anytime without further notice. The recorded matches may (or may not) be wiped once the application goes live. Please report any bugs you may bump into :></li>
+    <li><b>Bug reports</b>: <a href="https://github.com/kimifoud/ladder/issues">https://github.com/kimifoud/ladder/issues</a></li>
+    <li><b>English</b>, because the app is <a href="https://github.com/kimifoud/ladder">open source</a> (and i18n is yet to come).</li>
+    </ul>
 </div>
 
 <div class="row">
