@@ -22,6 +22,11 @@
                         setTimeout(function () {
                             ajaxFetchShouts()
                         }, 5000);
+                    } else if (cnt < 83) { // poll for 23*300 seconds = 115 minutes
+                        cnt++;
+                        setTimeout(function () {
+                            ajaxFetchShouts()
+                        }, 300000);
                     }
                 }
             });

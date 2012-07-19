@@ -2,12 +2,6 @@
     <h3>Latest matches</h3>
     <g:if test="${latestMatches?.size() > 0}">
         <table class="table table-striped cursorpointer">
-            <thead>
-            <tr>
-                <th>Played</th>
-                <th style="text-align:center" colspan="2">Players</th>
-            </tr>
-            </thead>
             <tbody>
             <g:each var="match" in="${latestMatches}">
                 <tr>
