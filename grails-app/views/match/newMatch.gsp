@@ -23,7 +23,7 @@
             <f:with bean="match">
                 <f:field property="player2" label="${message(code: 'match.opponent.label')}">
                     <g:select
-                            optionKey="id" optionValue="name" name="player2" from="${opponents}"
+                            optionKey="id" optionValue="name" name="player2.id" from="${opponents}"
                             noSelection="${['null': 'Select One...']}"
                             onchange="${remoteFunction(
                                     controller: 'match',
@@ -32,7 +32,7 @@
                                     update: [success: 'winner'])}"></g:select>
                 </f:field>
                 <f:field property="winner">
-                    <g:select name="winner" id="winner" from="['Select opponent first...']"/>
+                    <g:select name="winner.id" id="winner" from="" noSelection="${['null': 'Select opponent first...']}"/>
                 </f:field>
                 <f:field property="friendly" class="span3"/>
                 <f:field property="description" class="span3"/>

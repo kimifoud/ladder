@@ -81,7 +81,7 @@ class MatchController {
     }
 
     def save() {
-        def match = new Match(description: params.description)
+        def match = new Match(params)
         def ladder = Ladder.get(1) // TODO current ladder in session or something
 
         def user = User.findByUsername(springSecurityService.currentUser.properties["username"])
@@ -95,17 +95,8 @@ class MatchController {
         match.ladder = ladder
         match.player1 = player1
         match.player1rating = player1.eloRating
-        def player2 = null
-        if (params.player2?.isLong()) {
-            player2 = Player.get(params.player2)
-        }
-        match.player2 = player2
-        match.player2rating = player2?.eloRating
-        if (params.winner?.isLong()) {
-            match.winner = Player.get(params.winner)
-        }
+        match.player2rating = match.player2?.eloRating
         match.played = new Date()
-        match.friendly = params.friendly ?: false
         match.validate()
         if (!match.save(flush: true)) {
             def opponents = Player.findAllByLadderAndUserNotEqual(ladder, user)
