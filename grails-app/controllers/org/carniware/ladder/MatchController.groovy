@@ -1,6 +1,7 @@
 package org.carniware.ladder
 
 import grails.plugins.springsecurity.Secured
+import grails.converters.JSON
 
 @Secured(['ROLE_USER'])
 class MatchController {
@@ -76,8 +77,39 @@ class MatchController {
             def winners = [currentPlayer, selectedOpponent]
             render g.select(name: 'winner', optionKey: 'id', optionValue: 'name', from: winners, id: 'winner')
         } else {
-            render g.select(name: 'winner', from: ["Select opponent first..."], id: 'winner')
+            render g.select(name: 'winner', from: ["null": "Select opponent first..."], id: 'winner')
         }
+    }
+
+    def ajaxFindOpponents = {
+        def opponentsFound = Player.withCriteria {
+            user {
+                ne("id", springSecurityService.currentUser.properties["id"])
+                or {
+                    ilike("firstName", params.term + "%")
+                    ilike("lastName", params.term + "%")
+                }
+            }
+            ladder {
+                idEq(1L) // TODO support for multiple ladders
+            }
+            projections {
+                property("id", "id")
+                user {
+                    property("firstName", "firstName")
+                    property("lastName", "lastName")
+                }
+            }
+        }
+        def opponentsSelectList = []
+        opponentsFound.each {
+            def playerMap = [:] // jQuery autocomplete expects the JSON object to be with id/label/value.
+            playerMap.put("id", it[0])
+            playerMap.put("label", it[1] + " " + it[2])
+            playerMap.put("value", it[1] + " " + it[2])
+            opponentsSelectList.add(playerMap) // add to the arraylist
+        }
+        render (opponentsSelectList as JSON)
     }
 
     def save() {
@@ -106,7 +138,7 @@ class MatchController {
         }
         if (!match.friendly) {
             try {
-                ratingService.calculateNewRatings(player1, player2, match)
+                ratingService.calculateNewRatings(match.player1, match.player2, match)
             } catch (Exception e) {
                 log.error("Error calculating ratings.", e)
                 throw new RuntimeException("Crap happened while calculating new ratings.. :'(")
