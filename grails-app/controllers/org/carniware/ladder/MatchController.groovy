@@ -82,12 +82,21 @@ class MatchController {
     }
 
     def ajaxFindOpponents = {
+        String term = params?.term
+        def terms = term?.tokenize()
+        if (!terms) {
+           return
+        }
+        log.debug terms
         def opponentsFound = Player.withCriteria {
             user {
                 ne("id", springSecurityService.currentUser.properties["id"])
                 or {
-                    ilike("firstName", params.term + "%")
-                    ilike("lastName", params.term + "%")
+                    terms.each {
+                        log.debug it
+                        ilike("firstName", it + "%")
+                        ilike("lastName", it + "%")
+	                }
                 }
             }
             ladder {
