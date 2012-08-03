@@ -1,4 +1,6 @@
-
+import org.apache.log4j.DailyRollingFileAppender
+import org.apache.log4j.rolling.RollingFileAppender
+import org.apache.log4j.rolling.TimeBasedRollingPolicy
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
@@ -66,18 +68,27 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
+        grails.serverURL = "http://ladder.lovebo.at"
     }
 }
 
 // log4j configuration
 log4j = {
-    // Example of changing the log pattern for the default console
-    // appender:
-    //
-    //appenders {
-    //      console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    def rollingFile = new RollingFileAppender(name: 'rollingFileAppender', layout: pattern(conversionPattern: "%d [%t] %-5p %c{2} %x - %m%n"))
+    // Rolling policy where log filename is logs/app.log.
+    // Rollover each day, compress and save in logs/backup directory.
+    def rollingPolicy = new TimeBasedRollingPolicy(fileNamePattern: 'logs/backup/ladder.%d{yyyy-MM-dd}.gz', activeFileName: 'logs/ladder.log')
+    rollingPolicy.activateOptions()
+    rollingFile.setRollingPolicy rollingPolicy
+
+    appenders {
+        appender rollingFile
+    }
+
+    root {
+        // Use our newly created appender.
+        debug 'rollingFileAppender'
+    }
 
     error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
             'org.codehaus.groovy.grails.web.pages', //  GSP
@@ -92,7 +103,8 @@ log4j = {
             'net.sf.ehcache.hibernate'
 
     debug 'grails.app.jobs',
-          'org.carniware.ladder'
+          'org.carniware'
+    warn 'org.mortbay.log'
 }
 
 // Added by the Spring Security Core plugin:
@@ -114,6 +126,7 @@ grails.plugins.springsecurity.rememberMe.cookieName = 'ladder_remember_me'
 grails.plugins.springsecurity.rememberMe.tokenValiditySeconds = 7776000
 grails.plugins.springsecurity.rememberMe.key = 'justanotherladdertokenkey'
 
+grails.app.context = "/"
 
 
 

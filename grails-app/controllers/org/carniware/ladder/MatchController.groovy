@@ -1,7 +1,7 @@
 package org.carniware.ladder
 
 import grails.plugins.springsecurity.Secured
-import org.hibernate.FetchMode
+import grails.converters.JSON
 
 @Secured(['ROLE_USER'])
 class MatchController {
@@ -61,7 +61,8 @@ class MatchController {
 
     def ajaxGetWinnersSelect = {
         def userId = springSecurityService.currentUser.properties["id"]
-        def currentPlayer, selectedOpponent
+        def currentPlayer = null
+        def selectedOpponent = null
         if (userId) {
             def user = User.get(userId)
             def ladder = Ladder.get(1)
@@ -76,12 +77,52 @@ class MatchController {
             def winners = [currentPlayer, selectedOpponent]
             render g.select(name: 'winner', optionKey: 'id', optionValue: 'name', from: winners, id: 'winner')
         } else {
-            render g.select(name: 'winner', from: ["Select opponent first..."], id: 'winner')
+            render g.select(name: 'winner', from: ["null": "Select opponent first..."], id: 'winner')
         }
     }
 
+    def ajaxFindOpponents = {
+        String term = params?.term
+        def terms = term?.tokenize()
+        if (!terms) {
+           return
+        }
+        log.debug terms
+        def opponentsFound = Player.withCriteria {
+            user {
+                ne("id", springSecurityService.currentUser.properties["id"])
+                or {
+                    terms.each {
+                        log.debug it
+                        ilike("firstName", it + "%")
+                        ilike("lastName", it + "%")
+	                }
+                }
+            }
+            ladder {
+                idEq(1L) // TODO support for multiple ladders
+            }
+            projections {
+                property("id", "id")
+                user {
+                    property("firstName", "firstName")
+                    property("lastName", "lastName")
+                }
+            }
+        }
+        def opponentsSelectList = []
+        opponentsFound.each {
+            def playerMap = [:] // jQuery autocomplete expects the JSON object to be with id/label/value.
+            playerMap.put("id", it[0])
+            playerMap.put("label", it[1] + " " + it[2])
+            playerMap.put("value", it[1] + " " + it[2])
+            opponentsSelectList.add(playerMap) // add to the arraylist
+        }
+        render (opponentsSelectList as JSON)
+    }
+
     def save() {
-        def match = new Match(played: params.played, description: params.description)
+        def match = new Match(params)
         def ladder = Ladder.get(1) // TODO current ladder in session or something
 
         def user = User.findByUsername(springSecurityService.currentUser.properties["username"])
@@ -95,11 +136,8 @@ class MatchController {
         match.ladder = ladder
         match.player1 = player1
         match.player1rating = player1.eloRating
-        def player2 = Player.get(params.player2)
-        match.player2 = player2
-        match.player2rating = player2.eloRating
-        match.winner = Player.get(params.winner)
-        match.friendly = params.friendly ?: false
+        match.player2rating = match.player2?.eloRating
+        match.played = new Date()
         match.validate()
         if (!match.save(flush: true)) {
             def opponents = Player.findAllByLadderAndUserNotEqual(ladder, user)
@@ -109,7 +147,7 @@ class MatchController {
         }
         if (!match.friendly) {
             try {
-                ratingService.calculateNewRatings(player1, player2, match)
+                ratingService.calculateNewRatings(match.player1, match.player2, match)
             } catch (Exception e) {
                 log.error("Error calculating ratings.", e)
                 throw new RuntimeException("Crap happened while calculating new ratings.. :'(")

@@ -23,7 +23,7 @@ class RegisterController {
             redirect(controller: 'login', action: 'auth', params: [username: user.username])
         } else {
             flash.message = "Error registering user..."
-            return [profile: user]
+            return [user: user]
         }
     }
 }

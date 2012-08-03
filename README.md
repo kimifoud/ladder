@@ -3,32 +3,24 @@ Ladder
 
 An ELO ladder implementation built with Grails.
 
-Plugins used:
-- spring-security-core:1.2.7.3
-- twitter-bootstrap:2.0.2.25
-- fields:1.1
-- remote-pagination:0.3
-- resources:1.2-RC1
-- cached-resources:1.0
-- zipped-resources:1.0
-- yui-minify-resources:0.1.5
-- cache-headers:1.1.5
-
-
-TODO:
-- Wiki
-  - Instructions
-  - Basic structure
+TODO list:
 - Code
+  - registration to ladder via ladder page instead of automagic
   - player view
   - edit own matches within an hour of insert
-  - navigation
   - comment on matches (and players)
-  - tests
-  - support for multiple ladders
   - openid auth
   - i18n
   - error messages
+  - user input sanitation
+  - tests
+  - better navigation
+  - support for multiple ladders
   - forgot password functionality
-  - front page
-     - info
+  - info on front page
+  - charts with http://grails.org/plugin/google-visualization
+  - saving history information
+  - logging to file
+- Wiki
+  - Instructions
+  - Basic structure

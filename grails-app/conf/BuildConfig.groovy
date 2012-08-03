@@ -26,12 +26,15 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
-//        runtime 'mysql:mysql-connector-java:5.1.18'
+        runtime 'mysql:mysql-connector-java:5.1.16'
+
+        compile 'log4j:apache-log4j-extras:1.0'
     }
 
     plugins {
         runtime ":hibernate:$grailsVersion"
         runtime ":jquery:1.7.1"
+        compile ":jquery-ui:1.8.15"
         runtime ":resources:1.2-RC1"
         runtime ":cached-resources:1.0"
         runtime ":zipped-resources:1.0"

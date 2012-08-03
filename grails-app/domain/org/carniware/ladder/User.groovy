@@ -21,8 +21,8 @@ class User {
 	static constraints = {
 		username blank: false, unique: true, email: true, maxSize: 50
 		password blank: false
-        firstName blank: false, maxSize: 25
-        lastName blank: false, maxSize: 35
+        firstName blank: false, maxSize: 25, matches: "[a-zA-ZÅÄÖÜåäöü' ']+"
+        lastName blank: false, maxSize: 35, matches: "[a-zA-ZÅÄÖÜåäöü' ']+"
 	}
 
 	static mapping = {
@@ -54,8 +54,7 @@ class User {
 	}
 
     String toString() {
-        def ret = firstName + " " + lastName
-        return ret.encodeAsHTML()
+        firstName + " " + lastName
     }
 
     String getFullName() {

@@ -11,13 +11,14 @@
     <h1><g:message code="register.label"/></h1>
 </div>
 <g:if test="${flash.message}">
-    <div class="message" role="status">${flash.message}</div>
+    <div class="alert alert-error"><p>${flash.message}</p>
+        <g:hasErrors>
+            <g:renderErrors bean="${user}" as="list"/>
+        </g:hasErrors></div>
 </g:if>
-<g:hasErrors>
-    <div class="errors">
-        <g:renderErrors bean="${profile}" as="list"/>
-    </div>
-</g:hasErrors>
+<div class="errors">
+</div>
+
 <div class="row">
     <div class="span6">
         <g:form action="save" class="form-horizontal">

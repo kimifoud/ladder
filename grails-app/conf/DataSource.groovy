@@ -20,31 +20,17 @@ environments {
     test {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+            driverClassName = "com.mysql.jdbc.Driver"
+            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+            jndiName = "java:comp/env/jdbc/ladder_test"
         }
     }
     production {
-//        dataSource {
-//            dbCreate = "update"
-//            driverClassName = "com.mysql.jdbc.Driver"
-//            url = "jdbc:mysql://localhost/my_app"
-//            username = "root"
-//            password = ""
-//            pooled = true
-//            properties {
-//               maxActive = -1
-//               minEvictableIdleTimeMillis=1800000
-//               timeBetweenEvictionRunsMillis=1800000
-//               numTestsPerEvictionRun=3
-//               testOnBorrow=true
-//               testWhileIdle=true
-//               testOnReturn=true
-//               validationQuery="SELECT 1"
-//            }
-//        }
         dataSource {
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:h2:mem:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+            dbCreate = "update"
+            driverClassName = "com.mysql.jdbc.Driver"
+            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+            jndiName = "java:comp/env/jdbc/ladder"
         }
     }
 }

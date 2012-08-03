@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta name='layout' content='main'/>
-    <r:require modules="application"/>
+    <r:require modules="application, jquery-ui"/>
     <title>New match</title>
 </head>
 
@@ -20,33 +20,54 @@
             </div>
         </g:if>
         <g:form controller="match" action="save">
+            <g:hiddenField name="player2.id" />
             <f:with bean="match">
                 <f:field property="player2" label="${message(code: 'match.opponent.label')}">
-                    <g:select
-                            optionKey="id" optionValue="name" name="player2" from="${opponents}"
-                            noSelection="${['null': 'Select One...']}"
-                            onchange="${remoteFunction(
-                                    controller: 'match',
-                                    action: 'ajaxGetWinnersSelect',
-                                    params: '\'id=\' + escape(this.value)',
-                                    update: [success: 'winner'])}"></g:select>
+                    <g:textField name="player2auto" style="width: 300px;" placeholder="Start typing...  " />
                 </f:field>
                 <f:field property="winner">
-                    <g:select name="winner" id="winner" from="['Select opponent first...']"/>
-                </f:field>
-                <f:field property="played">
-                    <g:datePicker name="played" precision="minute" relativeYears="[0..0]"/>
+                    <g:select name="winner.id" id="winner" from=""
+                              noSelection="${['null': 'Select opponent first...']}"/>
                 </f:field>
                 <f:field property="friendly" class="span3"/>
                 <f:field property="description" class="span3"/>
             </f:with>
             <div class="form-actions">
                 <g:submitButton name="submit" value="Submit" class="btn btn-primary"/>
-                <cw:cancelButton />
+                <cw:cancelButton/>
             </div>
         </g:form>
     </div>
 </div>
 </body>
 
+<g:javascript>
+    $(document).ready(function () {
+        $("#player2auto").autocomplete({
+            source:function (request, response) {
+                $.ajax({
+                    url:"${createLink(controller: 'match', action: 'ajaxFindOpponents')}", // remote datasource
+                    data:request,
+                    success:function (data) {
+                        response(data); // set the response
+                    }
+                });
+            },
+            delay: 200,
+            minLength:1, // triggered only after minimum 2 characters have been entered.
+            select:function (event, ui) { // event handler when user selects an opponent from the list.
+                 var playerId = ui.item.id;
+                 $("#player2\\.id").val(playerId); // update the hidden field.
+                 $.ajax({
+                    url:"${createLink(controller: 'match', action: 'ajaxGetWinnersSelect')}",
+                    data: {id: playerId},
+                    dataType: 'html',
+                    success:function (data) {
+                        $("#winner").html(data);
+                    }
+                 });
+            }
+        });
+    });
+</g:javascript>
 </html>

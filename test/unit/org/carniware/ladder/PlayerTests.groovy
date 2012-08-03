@@ -29,6 +29,8 @@ class PlayerTests {
         assertEquals("minSize", testPlayer.errors["password"])
         testPlayer = new Player(username: 'jussi@jami.net', password: 'spurdo', firstName: 'Jussi', lastName: 'Viljami')
         assertTrue(testPlayer.validate())
+        testPlayer = new Player(username: 'jussi@jami.net', password: 'spurdo', firstName: 'Äläbööü', lastName: 'öÅöäÖÖÅÜ')
+        assertTrue(testPlayer.validate())
         testPlayer = new Player(username: 'jesse@jami.net', password: 'spurdo', firstName: 'Too long first name to test for constraint', lastName: 'Too long last name to test for constraint')
         assertFalse(testPlayer.validate())
         assertEquals("maxSize", testPlayer.errors["firstName"])

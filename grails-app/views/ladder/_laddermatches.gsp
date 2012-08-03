@@ -22,7 +22,7 @@
                                               ratingChange="${match.player2ratingChange}"/> <g:link controller="player"
                                                                                                     action="show"
                                                                                                     id="${match.player2.id}">${match.player2}</g:link></td>
-                    <td><i><cw:cutString str="${match.description}" l="70"/></i></td>
+                    <td><i><cw:cutString str="${match.description.encodeAsHTML()}" l="70"/></i></td>
                 </tr>
             </g:each>
             </tbody>
