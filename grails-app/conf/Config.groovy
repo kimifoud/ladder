@@ -91,7 +91,8 @@ log4j = {
             'org.hibernate',
             'net.sf.ehcache.hibernate'
 
-    debug 'grails.app.jobs'
+    debug 'grails.app.jobs',
+          'org.carniware.ladder'
 }
 
 // Added by the Spring Security Core plugin:

@@ -1,11 +1,9 @@
 package org.carniware.ladder
 
-
-
 class DeleteShoutsJob {
     static triggers = {
 //      simple name: 'deleteShouts', repeatInterval: 15000l, startDelay: 10000
-      cron name:'deleteShoutsCronTrigger', startDelay:60000l, cronExpression: '0 15 8 * * ?'
+        cron name: 'deleteShoutsCronTrigger', startDelay: 60000l, cronExpression: '0 15 8 * * ?'
     }
 
     def execute() {
