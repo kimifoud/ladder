@@ -2,8 +2,6 @@ package org.carniware.ladder
 
 class LeaderboardService {
 
-    static transactional = false
-
     def takeSnapshot(Ladder ladder) {
         def players = Player.withCriteria {
             join "ladder"
@@ -13,13 +11,13 @@ class LeaderboardService {
         if (players) {
             LeaderboardHistory lbh = new LeaderboardHistory()
             lbh.ladder = ladder
-            Map<Player, BigDecimal> map = new HashMap<Player, BigDecimal>()
             players.each {
                 log.debug("Player " + it.id + " (" + it.eloRating + ")")
-                map.put(it, it.eloRating)
+                PlayerHistory ph = new PlayerHistory()
+				ph.player = it
+				ph.rating = it.eloRating
+				lbh.addToPlayerHistories(ph)
             }
-            log.debug("map: " + map)
-            lbh.leaderboard = map
             if (!lbh.save()) {
                 log.debug("Error saving snapshot of leaderboard.")
                 log.debug(lbh.errors)

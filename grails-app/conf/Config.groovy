@@ -128,5 +128,3 @@ grails.plugins.springsecurity.rememberMe.key = 'justanotherladdertokenkey'
 
 grails.app.context = "/"
 
-
-

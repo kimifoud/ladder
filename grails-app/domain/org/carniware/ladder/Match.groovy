@@ -17,7 +17,6 @@ class Match {
     Date lastUpdated
 
     static belongsTo = [ladder: Ladder]
-    static hasMany = [comments: Comment]
 
     static constraints = {
         ladder()

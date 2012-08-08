@@ -9,7 +9,7 @@ class Player {
     Ladder ladder
     User user
 
-    static hasMany = [matches: Match, comments: Comment]
+    static hasMany = [matches: Match]
     static mappedBy = [matches: 'player1', matches: 'player2']
 
     String getName() { user.fullName }
@@ -20,7 +20,6 @@ class Player {
         eloRating(nullable: false, scale: 0)
         matches(nullable: true)
         ladder(nullable: true)
-        comments(nullable: true)
     }
 
     boolean equals(other) {
