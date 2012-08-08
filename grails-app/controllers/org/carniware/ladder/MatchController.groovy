@@ -14,7 +14,7 @@ class MatchController {
     def myMatches() {
         def userId = springSecurityService.currentUser.properties["id"]
         def offset = params.offset?.isInteger() ? params.offset as int : 0;
-        def max = params.max?.isInteger() ? params.max as int : 5;
+        def max = params.max?.isInteger() ? params.max as int : 10;
         def criteria = Match.createCriteria()
         def matches = criteria.list {
             or {

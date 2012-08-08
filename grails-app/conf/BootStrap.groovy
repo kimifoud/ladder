@@ -31,14 +31,12 @@ class BootStrap {
 
                 def ladder = Ladder.findByTitle('Testladder') ?: new Ladder(title: 'Testladder', description: 'This is a test ladder').save(failOnError: true, flush: true)
 
+				Player userPlayer, adminPlayer
                 if (!user.ladders.contains(ladder)) {
-                    Player.link(user, ladder)
+                    userPlayer = Player.link(user, ladder)
                 }
                 if (!admin.ladders.contains(ladder)) {
-                    Player.link(admin, ladder)
-                }
-                if (!admin.ladders.contains(ladder)) {
-                    Player.link(admin, ladder)
+                    adminPlayer = Player.link(admin, ladder)
                 }
 
                 assert User.count() == 2
@@ -47,6 +45,12 @@ class BootStrap {
                 assert Ladder.count() == 1
                 assert Match.count() == 0
                 assert Player.count() == 2
+				
+				for (int i = 0; i < 100; i++) {
+					Match match = new Match(ladder: ladder, player1: userPlayer, player2: adminPlayer, winner: userPlayer, player1rating: new BigDecimal(1500+i), player2rating: new BigDecimal(1500-i), player1ratingChange: new BigDecimal(1), player2ratingChange: new BigDecimal(-1), played: new Date(), description: "Test match...")
+					match.save()
+				}
+				assert Match.count() == 100
                 break;
             case Environment.TEST: break;
             case Environment.PRODUCTION: break;
