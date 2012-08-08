@@ -12,7 +12,7 @@
 <g:if test="${matchesTotal > 0}">
     <g:render template="/match/matches" model="${matches}" />
     <div class="pagination">
-        <g:paginate maxSteps="2" max="5" total="${matchesTotal}" controller="match" action="matches" id="${params.id}"/>
+        <g:paginate maxSteps="2" max="5" total="${matchesTotal}" controller="player" action="show" id="${params.id}"/>
     </div>
 
 </g:if>

@@ -12,6 +12,8 @@ class PlayerController {
         def player
         def matches
         def matchesCount
+        def offset = params.offset?.isInteger() ? params.offset as int : 0;
+        def max = params.max?.isInteger() ? params.max as int : 5;
         if (params.id?.isNumber()) {
             player = Player.findById(params.id)
             matches = Match.withCriteria() {
@@ -20,6 +22,8 @@ class PlayerController {
                     eq("player2.id", params.id as Long)
                 }
                 order("id", "desc")
+				maxResults(max)
+            	firstResult(offset)
             }
             matchesCount = Match.createCriteria().count() {
                 or {
