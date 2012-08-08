@@ -8,6 +8,7 @@ class MatchController {
 
     def springSecurityService
     def ratingService
+	def matchService
 
     static defaultAction = "myMatches"
 
@@ -202,4 +203,8 @@ class MatchController {
         flash.message = message(code: 'match.deleted.message', default: 'Match deleted.')
         redirect(action: "myMatches")
     }
+	
+	def ajaxFetchLatestMatches() {
+		render(template: "/home/latestMatches", model: [latestMatches: matchService.latestMatches()])
+	}
 }

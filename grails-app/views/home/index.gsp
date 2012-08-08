@@ -4,11 +4,15 @@
     <r:require modules="application"/>
     <title>Home</title>
     <g:javascript>
-        var cnt = 0;
+        var cntShouts = 0;
+        var cntMatches = 0;
         $(document).ready(function () {
             setTimeout(function () {
                 ajaxFetchShouts()
             }, 5000);
+            setTimeout(function () {
+            	ajaxFetchLatestMatches()
+            }, 300000);
         });
 
         function ajaxFetchShouts() {
@@ -17,15 +21,31 @@
                 dataType: 'html',
                 success:function (data) {
                     $('#shouts').html(data);
-                    if (cnt < 60) { // poll for 60*5 seconds = 5 minutes
-                        cnt++;
+                    if (cntShouts < 60) { // poll for 60*5 seconds = 5 minutes
+                        cntShouts++;
                         setTimeout(function () {
                             ajaxFetchShouts()
                         }, 5000);
-                    } else if (cnt < 83) { // poll for 23*300 seconds = 115 minutes
-                        cnt++;
+                    } else if (cntShouts < 83) { // poll for 23*300 seconds = 115 minutes
+                        cntShouts++;
                         setTimeout(function () {
                             ajaxFetchShouts()
+                        }, 300000);
+                    }
+                }
+            });
+        }
+        
+        function ajaxFetchLatestMatches() {
+            $.ajax({
+                url: '${createLink(controller: 'match', action: 'ajaxFetchLatestMatches')}',
+                dataType: 'html',
+                success:function (data) {
+                    $('#latestMatches').html(data);
+                    if (cntMatches < 24) { // poll for 24*5 minutes = 120 minutes
+                        cntMatches++;
+                        setTimeout(function () {
+                            ajaxFetchLatestMatches()
                         }, 300000);
                     }
                 }
@@ -47,11 +67,11 @@
 </div>
 
 <div class="row">
-    <div class="span6"><div class="well"><g:render template="latestMatches" model="${latestMatches}"/></div></div>
+    <div class="span6"><div id="latestMatches" class="well"><g:render template="latestMatches" model="latestMatches"/></div></div>
 
     <div class="span6">
         <div class="well" id="shoutbox">
-            <g:formRemote id="shoutForm" name="shoutForm" url="[controller: 'shout', action: 'ajaxSave']" method="POST" update="shouts" before="disableShout()" after="enableShout(); cnt = 0" onSuccess="clearForm('#shoutForm')" style="margin-bottom: 5px">
+            <g:formRemote id="shoutForm" name="shoutForm" url="[controller: 'shout', action: 'ajaxSave']" method="POST" update="shouts" before="disableShout()" after="enableShout(); cntShouts = 0" onSuccess="clearForm('#shoutForm')" style="margin-bottom: 5px">
                 <input class="span5" name="shout_" id="shout_" size="16" type="text">
                 <input type="submit" value="Shout!" id="shoutBtn" />
                 <g:hiddenField name="shout" id="shout" />

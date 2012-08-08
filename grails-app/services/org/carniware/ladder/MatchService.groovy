@@ -2,11 +2,11 @@ package org.carniware.ladder
 
 class MatchService {
 
-    def latestMatches() {
+    List latestMatches() {
         def matches = Match.withCriteria {
             maxResults(5)
             order("dateCreated", "desc")
         }
-        [latestMatches: matches]
+        matches
     }
 }
