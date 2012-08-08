@@ -21,8 +21,8 @@ class User {
 	static constraints = {
 		username blank: false, unique: true, email: true, maxSize: 50
 		password blank: false
-        firstName blank: false, maxSize: 25, matches: "[a-zA-ZÅÄÖÜåäöü' ']+"
-        lastName blank: false, maxSize: 35, matches: "[a-zA-ZÅÄÖÜåäöü' ']+"
+        firstName blank: false, maxSize: 25, matches: "[a-zA-ZÅÄÖÜåäöü' '-]+"
+        lastName blank: false, maxSize: 35, matches: "[a-zA-ZÅÄÖÜåäöü' '-]+"
 	}
 
 	static mapping = {
