@@ -1,9 +1,12 @@
 package org.carniware.ladder
 
-class PlayerHistory {
+import java.util.Date;
 
+class PlayerHistory {
+	
 	Player player
 	BigDecimal rating
+	Date dateCreated
 	
 	static belongsTo = [lbh: LeaderboardHistory]
     static constraints = {
