@@ -46,6 +46,7 @@ grails.project.dependency.resolution = {
         compile ":fields:1.1"
         compile ":remote-pagination:0.3"
         compile ":quartz:1.0-RC2"
+		runtime ":database-migration:1.1"
 
         build ":tomcat:$grailsVersion"
     }
