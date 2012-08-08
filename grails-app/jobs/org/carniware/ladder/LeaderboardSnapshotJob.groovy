@@ -6,7 +6,7 @@ class LeaderboardSnapshotJob {
 	def leaderboardService
 
 	static triggers = {
-		//        simple name: 'testSnapshot', repeatInterval: 15000l, startDelay: 10000
+//        simple name: 'testSnapshot', repeatInterval: 15000l, startDelay: 10000
 		cron name: 'leaderboardSnapshotCronTrigger', startDelay: 60000l, cronExpression: '0 30 23 * * ?'
 	}
 
