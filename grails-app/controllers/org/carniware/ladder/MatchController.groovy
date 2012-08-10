@@ -76,9 +76,9 @@ class MatchController {
         }
         if (currentPlayer && selectedOpponent) {
             def winners = [currentPlayer, selectedOpponent]
-            render g.select(name: 'winner', optionKey: 'id', optionValue: 'name', from: winners, id: 'winner')
+            render g.select(name: 'winner.id', optionKey: 'id', optionValue: 'name', from: winners, id: 'winner.id')
         } else {
-            render g.select(name: 'winner', from: ["null": "Select opponent first..."], id: 'winner')
+            render g.select(name: 'winner.id', from: ["null": "Select opponent first..."], id: 'winner.id')
         }
     }
 
