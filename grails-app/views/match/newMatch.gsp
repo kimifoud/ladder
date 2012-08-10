@@ -26,8 +26,10 @@
                     <g:textField name="player2auto" style="width: 300px;" placeholder="Start typing...  " />
                 </f:field>
                 <f:field property="winner">
-                    <g:select name="winner.id" id="winner" from=""
+                    <div id="winner">
+                        <g:select name="winner.id" from=""
                               noSelection="${['null': 'Select opponent first...']}"/>
+                    </div>
                 </f:field>
                 <f:field property="friendly" class="span3"/>
                 <f:field property="description" class="span3"/>
