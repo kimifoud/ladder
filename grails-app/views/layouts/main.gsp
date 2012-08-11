@@ -57,7 +57,7 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><g:link controller="player"><i class="icon-cog"></i> Profile</g:link></li>
+                                <li><g:link controller="user" action="profile"><i class="icon-cog"></i> Profile</g:link></li>
                                 <li class="divider"/>
                                 <li><g:link controller="logout"><i class="icon-off"></i> Sign Out</g:link></li>
                             </ul>
