@@ -34,5 +34,5 @@
 </div>
 
 <div class="pagination">
-    <cw:remotePaginate total="${matchesTotal}" update="matches_pane" action="matches" maxsteps="3" max="10"/>
+    <cw:remotePaginate total="${matchesTotal}" update="matches_pane" action="ajaxFetchMatches" maxsteps="3" max="10"/>
 </div>

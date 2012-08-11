@@ -131,7 +131,7 @@ class LadderController {
     /**
      * For AJAX pagination of ladder's matches.
      */
-    def matches() {
+    def ajaxFetchMatches() {
         Long ladderId = 1L // TODO: multiple ladders support
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         params.maxSteps = Math.min(params.maxSteps ? params.int('maxSteps') : 0, 10)
