@@ -34,4 +34,17 @@ class PlayerController {
         [player: player, matches: matches, matchesTotal: matchesCount]
     }
 
+    def ajaxFetchMatches() {
+        params.max = params.max ? Math.min(params.max as int, 50) : 10
+        def matches = Match.createCriteria().list(max: params.max, offset: params.offset) {
+            or {
+                eq("player1.id", params.id as Long)
+                eq("player2.id", params.id as Long)
+            }
+            order("id", "desc")
+        }
+        log.debug("matches.size(): " + matches.size())
+        render(template: "/player/matches", model: [matches: matches, matchesTotal: matches.totalCount])
+    }
+
 }

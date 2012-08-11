@@ -13,9 +13,8 @@
 <div id="charts">
 </div>
 <g:if test="${matchesTotal > 0}">
-    <g:render template="/match/matches" model="${matches}" />
-    <div class="pagination">
-        <g:paginate maxsteps="3" total="${matchesTotal}" controller="player" action="show" id="${params.id}"/>
+    <div id="matchHolder">
+    <g:render template="/player/matches" model="${matches}" />
     </div>
 
 </g:if>

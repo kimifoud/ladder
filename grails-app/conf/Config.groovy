@@ -103,7 +103,7 @@ log4j = {
             'net.sf.ehcache.hibernate'
 
     warn 'org.mortbay.log'
-    debug 'grails.app',
+    debug 'grails.app.jobs',
     info 'grails.app.org.carniware.ladder'
 }
 
