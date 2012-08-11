@@ -75,7 +75,7 @@ environments {
 // log4j configuration
 log4j = {
     def rollingFile = new RollingFileAppender(name: 'rollingFileAppender', layout: pattern(conversionPattern: "%d [%t] %-5p %c{2} %x - %m%n"))
-    // Rolling policy where log filename is logs/app.log.
+    // Rolling policy where log filename is logs/ladder.log.
     // Rollover each day, compress and save in logs/backup directory.
     def rollingPolicy = new TimeBasedRollingPolicy(fileNamePattern: 'logs/backup/ladder.%d{yyyy-MM-dd}.gz', activeFileName: 'logs/ladder.log')
     rollingPolicy.activateOptions()

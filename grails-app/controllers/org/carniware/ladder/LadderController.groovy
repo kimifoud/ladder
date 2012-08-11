@@ -2,7 +2,6 @@ package org.carniware.ladder
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
-import org.carniware.ladder.Ladder
 
 @Secured(['ROLE_USER'])
 class LadderController {
