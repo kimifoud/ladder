@@ -87,7 +87,7 @@ log4j = {
 
     root {
         // Use our newly created appender.
-        debug 'rollingFileAppender'
+        error 'rollingFileAppender'
     }
 
     error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
@@ -102,9 +102,9 @@ log4j = {
             'org.hibernate',
             'net.sf.ehcache.hibernate'
 
-    debug 'grails.app.jobs',
-          'org.carniware'
     warn 'org.mortbay.log'
+    debug 'grails.app',
+    info 'grails.app.org.carniware.ladder'
 }
 
 // Added by the Spring Security Core plugin:
