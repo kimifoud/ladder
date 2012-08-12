@@ -13,15 +13,19 @@
 <div class="row">
 <div class="span12">
     <g:if test="${match}">
-        <p><b>Ladder:</b> ${match.ladder.title}</p>
+        <p><b>Ladder:</b> <g:link controller="ladder" action="leaderboard"
+                                  id="${match.ladder.id}">${match.ladder.title}</g:link></p>
 
-        <p><b>Players:</b> ${match.player1} <cw:ratingBadge
-                rating="${match.player1rating}"/> vs. ${match.player2} <cw:ratingBadge
+        <p><b>Players:</b> <g:link controller="player" action="show"
+                                   id="${match.player1.id}">${match.player1}</g:link> <cw:ratingBadge
+                rating="${match.player1rating}"/> vs. <g:link controller="player" action="show"
+                                                              id="${match.player2.id}">${match.player2}</g:link> <cw:ratingBadge
                 rating="${match.player2rating}"/></p>
 
-        <p><b>Winner:</b> ${match.winner}</p>
+        <p><b>Winner:</b> <g:link controller="player" action="show"
+                                  id="${match.winner.id}">${match.winner}</g:link></p>
 
-        <p><b>Played:</b> <g:formatDate format="HH:mm, dd.MM.yyyy" date="${match.played}"/> (<cw:dateFromNow
+        <p><b>Played:</b> <g:formatDate format="HH:mm dd.MM.yyyy" date="${match.played}"/> (<cw:dateFromNow
                 date="${match.played}"/>)</p>
 
         <p><b>Result:</b> <cw:matchResultString p1rc="${match.player1ratingChange}" p1name="${match.player1.name}"
