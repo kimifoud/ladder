@@ -36,7 +36,7 @@ class ShoutController {
             gt "id", id
         }
         newShouts.each {
-            def shoutResult = [id: it.id, shouted: it.dateCreated.format("HH:MM"), shouter: it.shouter.fullName, shout: it.shout]
+            def shoutResult = [id: it.id, shouted: it.dateCreated.format("HH:mm"), shouter: it.shouter.fullName, shout: it.shout]
             results << shoutResult
         }
         render results as JSON
