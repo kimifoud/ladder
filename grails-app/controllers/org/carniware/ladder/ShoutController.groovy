@@ -1,6 +1,7 @@
 package org.carniware.ladder
 
 import grails.plugins.springsecurity.Secured
+import grails.converters.JSON
 
 @Secured(['ROLE_USER'])
 class ShoutController {
@@ -27,5 +28,12 @@ class ShoutController {
     def ajaxFetchLatest() {
         def shouts = Shout.list(max: 25)
         render(template: "latestShouts", model: [shouts: shouts])
+    }
+
+    def ajaxFetchLatest(Long id) {
+        def newShouts = Shout.withCriteria {
+            gt "id", id
+        }
+        newShouts as JSON
     }
 }
