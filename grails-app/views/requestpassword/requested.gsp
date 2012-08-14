@@ -8,7 +8,7 @@
 
 <body>
 <div class="page-header">
-    <h1> <%-- <g:message code="register.label"/> --%></h1>
+    <h1>Hurray!</h1>
 </div>
 <g:if test="${flash.message}">
     <div class="alert alert-error"><p>${flash.message}</p>

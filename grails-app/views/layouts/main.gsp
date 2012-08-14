@@ -79,6 +79,7 @@
                                     <label for='remember_me' class='checkbox'>
                                     <input type='checkbox' class='checkbox' name='_spring_security_remember_me' id='remember_me' checked='true'/>
                                     <g:message code="springSecurity.login.remember.me.label"/></label>
+                                    <g:link controller="requestPassword">Forgot your password?</g:link>
                                     <g:submitButton class="btn btn-primary" name="login"
                                                     style="clear: left; width: 100%; height: 32px; font-size: 13px;"
                                                     value="Sign In"/>
@@ -99,7 +100,7 @@
     <g:layoutBody/>
     <hr/>
     <footer>
-        <p>&copy; 2012 Kimi</p>
+        <p>&copy; 2012 Ladder</p>
     </footer>
 </div>
 <r:layoutResources/>

@@ -1,4 +1,3 @@
-import org.apache.log4j.DailyRollingFileAppender
 import org.apache.log4j.rolling.RollingFileAppender
 import org.apache.log4j.rolling.TimeBasedRollingPolicy
 // locations to search for config files that get merged into the main config
@@ -63,14 +62,7 @@ grails.hibernate.cache.queries = true
 
 grails {
     mail {
-        host = "smtp.gmail.com"
-        port = 465
-        username = "ladder.lovebo.at@gmail.com"
-        password = "rakkausvene12"
-        props = ["mail.smtp.auth":"true",
-                "mail.smtp.socketFactory.port":"465",
-                "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-                "mail.smtp.socketFactory.fallback":"false"]
+        jndiName = "java:comp/env/mail/mySession"
     }
 }
 
