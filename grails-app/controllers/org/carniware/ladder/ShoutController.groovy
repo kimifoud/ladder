@@ -30,10 +30,15 @@ class ShoutController {
         render(template: "latestShouts", model: [shouts: shouts])
     }
 
-    def ajaxFetchLatest(Long id) {
+    def ajaxFetchLatestAfter(Long id) {
+        def results = []
         def newShouts = Shout.withCriteria {
             gt "id", id
         }
-        newShouts as JSON
+        newShouts.each {
+            def shoutResult = [id: it.id, shouted: it.dateCreated.format("HH:MM"), shouter: it.shouter.fullName, shout: it.shout]
+            results << shoutResult
+        }
+        render results as JSON
     }
 }
