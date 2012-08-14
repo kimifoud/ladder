@@ -57,6 +57,7 @@
                                 class="btn btn-primary"/>
                 <g:link controller="home" class="btn">Cancel</g:link>
                 <g:link controller="register" class="btn btn-info">Register</g:link>
+                <g:link controller="requestPassword" class="btn btn-info">Request password</g:link>
             </div>
         </form>
     </div>

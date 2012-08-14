@@ -16,6 +16,8 @@ class User {
     Date dateCreated
     Date lastUpdated
 
+    String passwordRequestToken
+
     static hasMany = [players: Player]
 
 	static constraints = {
@@ -23,6 +25,7 @@ class User {
 		password blank: false
         firstName blank: false, maxSize: 25, matches: "[a-zA-ZÅÄÖÜåäöü' '-]+"
         lastName blank: false, maxSize: 35, matches: "[a-zA-ZÅÄÖÜåäöü' '-]+"
+        passwordRequestToken nullable: true
 	}
 
 	static mapping = {
