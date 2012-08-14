@@ -6,7 +6,7 @@ import grails.converters.JSON
 @Secured(['ROLE_USER'])
 class ShoutController {
 
-    static allowedMethods = [save: "POST"]
+    static allowedMethods = [ajaxSave: "POST"]
 
     def springSecurityService
 
@@ -19,23 +19,25 @@ class ShoutController {
         }
         if (shout.save()) {
             session["lastShout"] = shout.dateCreated.time
-            forward(action: 'ajaxFetchLatest')
+            def jsonShout = [id: shout.id, shouted: shout.dateCreated.format("HH:mm"), shouter: shout.shouter.fullName, shout: shout.shout]
+            render jsonShout as JSON
         } else {
-            render('<div class="alert alert-error">Error saving shout...</div>')
+            def errorShout = [id: 0, shouted: new Date().format("HH:mm"), shouter: 'SYSTEM', shout: 'Error saving shout!']
+            render errorShout as JSON
         }
     }
 
-    def ajaxFetchLatest() {
-        def shouts = Shout.list(max: 25)
-        render(template: "latestShouts", model: [shouts: shouts])
-    }
-
-    def ajaxFetchLatestAfter(Long id) {
+    def ajaxFetchShouts(Long id) {
         def results = []
-        def newShouts = Shout.withCriteria {
-            gt "id", id
+        def shouts
+        if (id < 1) {
+            shouts = Shout.list(max: 25)
+        } else {
+            shouts = Shout.withCriteria {
+                gt "id", id
+            }
         }
-        newShouts.each {
+        shouts.each {
             def shoutResult = [id: it.id, shouted: it.dateCreated.format("HH:mm"), shouter: it.shouter.fullName, shout: it.shout]
             results << shoutResult
         }

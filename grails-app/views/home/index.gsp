@@ -1,15 +1,34 @@
 <html>
 <head>
     <meta name='layout' content='main'/>
-    <r:require modules="application"/>
+    <r:require modules="application, knockout-dev"/>
     <title>Home</title>
     <g:javascript>
+        var shoutsViewModel = {
+            Shouts: ko.observableArray(),
+            HighestShout: ko.observable(0),
+            SortShouts: function() {
+                shoutsViewModel.Shouts.sort(
+                    function(left, right) {
+                        return left.id == right.id
+                            ? 0
+                            : (left.id < right.id ? 1 : -1)
+                    }
+                );
+
+                var highest = shoutsViewModel.Shouts()[0];
+
+                if (highest != undefined)
+                    shoutsViewModel.HighestShout(highest.id);
+            }
+        };
+
+        ko.applyBindings(shoutsViewModel, document.getElementById('shouts'));
+
         var cntShouts = 0;
         var cntMatches = 0;
         $(document).ready(function () {
-            setTimeout(function () {
-                ajaxFetchShouts()
-            }, 5000);
+            ajaxFetchShouts();
             setTimeout(function () {
             	ajaxFetchLatestMatches()
             }, 300000);
@@ -17,10 +36,15 @@
 
         function ajaxFetchShouts() {
             $.ajax({
-                url: '${createLink(controller: 'shout', action: 'ajaxFetchLatest')}',
-                dataType: 'html',
+                url: '${createLink(controller: 'shout', action: 'ajaxFetchShouts')}',
+                data: { id: shoutsViewModel.HighestShout() },
+                dataType: 'json',
                 success:function (data) {
-                    $('#shouts').html(data);
+                    //TODO: get scrollbar-position
+                    ko.utils.arrayPushAll(shoutsViewModel.Shouts(),data);
+                    shoutsViewModel.Shouts.valueHasMutated();
+                    shoutsViewModel.SortShouts();
+                    //TODO: reset scrollbar-position
                     if (cntShouts < 60) { // poll for 60*5 seconds = 5 minutes
                         cntShouts++;
                         setTimeout(function () {
@@ -35,7 +59,7 @@
                 }
             });
         }
-        
+
         function ajaxFetchLatestMatches() {
             $.ajax({
                 url: '${createLink(controller: 'match', action: 'ajaxFetchLatestMatches')}',
@@ -71,13 +95,15 @@
 
     <div class="span6">
         <div class="well" id="shoutbox">
-            <g:formRemote id="shoutForm" name="shoutForm" url="[controller: 'shout', action: 'ajaxSave']" method="POST" update="shouts" before="disableShout()" after="enableShout(); cntShouts = 0" onSuccess="clearForm('#shoutForm')" style="margin-bottom: 5px">
+            <g:formRemote id="shoutForm" name="shoutForm" url="[controller: 'shout', action: 'ajaxSave']" method="POST" before="disableShout()" after="enableShout(); cntShouts = 0" onSuccess="clearForm('#shoutForm')" style="margin-bottom: 5px">
                 <input class="span5" name="shout_" id="shout_" size="16" type="text">
                 <input type="submit" value="Shout!" id="shoutBtn" />
                 <g:hiddenField name="shout" id="shout" />
             </g:formRemote>
             <div id="shouts">
-                <g:render template="/shout/latestShouts" model="shouts" />
+                <div class="scrollableShouts" data-bind="foreach: Shouts">
+                    <p><b>(<span data-bind="text: shouted"></span>) <span data-bind="text: shouter"></span></b> <span data-bind="text: shout"></span></p>
+                </div>
             </div>
         </div>
     </div>

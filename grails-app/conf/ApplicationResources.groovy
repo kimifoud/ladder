@@ -13,4 +13,13 @@ modules = {
     error {
         resource url: 'css/errors.css'
     }
+
+//    'knockout' {
+//        resource url:'js/knockout-2.1.0.js', disposition: 'head'
+//        resource url:'js/knockout-2.1.0.mapping.js', disposition: 'head'
+//    }
+    'knockout-dev' {
+        resource url:'js/knockout-2.1.0.debug.js', disposition: 'head'
+        resource url:'js/knockout.mapping-2.1.0.debug.js', disposition: 'head'
+    }
 }
