@@ -5,7 +5,7 @@ An ELO ladder implementation built with Grails.
 
 TODO list:
 - Code
-  - forgot password functionality
+  - clean up password functionality
   - match statistics to player view (match count, win-% etc.)
   - charts with http://grails.org/plugin/google-visualization
   - edit own matches within an hour of insert
