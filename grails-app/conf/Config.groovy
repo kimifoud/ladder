@@ -60,20 +60,18 @@ grails.exceptionresolver.params.exclude = ['password', 'j_password']
 // enable query caching by default
 grails.hibernate.cache.queries = true
 
-grails {
-    mail {
-        jndiName = "java:comp/env/mail/mySession"
-    }
-}
-
 // set per-environment serverURL stem for creating absolute links
 environments {
     development {
         grails.logging.jul.usebridge = true
+//        grails.mail {
+//            // define mail variables for development here
+//        }
     }
     production {
         grails.logging.jul.usebridge = false
         grails.serverURL = "http://ladder.lovebo.at"
+        grails.mail.jndiName = "java:comp/env/mail/mySession"
     }
 }
 

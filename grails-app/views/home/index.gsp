@@ -40,22 +40,19 @@
                 data: { id: shoutsViewModel.HighestShout() },
                 dataType: 'json',
                 success:function (data) {
-                    //TODO: get scrollbar-position
                     ko.utils.arrayPushAll(shoutsViewModel.Shouts(),data);
                     shoutsViewModel.Shouts.valueHasMutated();
                     shoutsViewModel.SortShouts();
-                    //TODO: reset scrollbar-position
                     if (cntShouts < 60) { // poll for 60*5 seconds = 5 minutes
-                        cntShouts++;
                         setTimeout(function () {
                             ajaxFetchShouts()
                         }, 5000);
                     } else if (cntShouts < 83) { // poll for 23*300 seconds = 115 minutes
-                        cntShouts++;
                         setTimeout(function () {
                             ajaxFetchShouts()
                         }, 300000);
                     }
+                    cntShouts++;
                 }
             });
         }

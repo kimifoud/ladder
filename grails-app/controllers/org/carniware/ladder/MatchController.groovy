@@ -13,43 +13,9 @@ class MatchController {
     static defaultAction = "myMatches"
 
     def myMatches() {
-        def userId = springSecurityService.currentUser.properties["id"]
-        def offset = params.offset?.isInteger() ? params.offset as int : 0;
-        def max = params.max?.isInteger() ? params.max as int : 10;
-        def criteria = Match.createCriteria()
-        def matches = criteria.list {
-            or {
-                player1 {
-                    user {
-                        eq("id", userId)
-                    }
-                }
-                player2 {
-                    user {
-                        eq("id", userId)
-                    }
-                }
-            }
-            maxResults(max)
-            firstResult(offset)
-            order("id", "desc")
-        }
-        def criteria2 = Match.createCriteria()
-        def matchesCount = criteria2.count {
-            or {
-                player1 {
-                    user {
-                        eq("id", userId)
-                    }
-                }
-                player2 {
-                    user {
-                        eq("id", userId)
-                    }
-                }
-            }
-        }
-        [matches: matches, matchesTotal: matchesCount]
+        def user = springSecurityService.currentUser
+        def playerId = Player.findByUser(user).id // TODO multiple ladder support
+        forward(controller: 'player', action: 'show', id: playerId)
     }
 
     def newMatch() {

@@ -42,7 +42,7 @@ grails.project.dependency.resolution = {
 
         runtime ":spring-security-core:1.2.7.3"
         compile ":cache-headers:1.1.5"
-        compile (":twitter-bootstrap:2.0.2.25") { excludes 'svn' }
+        compile ":twitter-bootstrap:2.0.4"
         compile ":fields:1.1"
         compile ":remote-pagination:0.3"
         compile ":quartz:1.0-RC2"
