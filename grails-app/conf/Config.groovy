@@ -107,7 +107,7 @@ log4j = {
 
     warn 'org.mortbay.log'
     debug 'grails.app.jobs',
-    info 'grails.app.org.carniware.ladder'
+    info 'org.carniware.ladder'
 }
 
 // Added by the Spring Security Core plugin:

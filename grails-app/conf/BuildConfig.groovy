@@ -48,7 +48,14 @@ grails.project.dependency.resolution = {
         compile ":quartz:1.0-RC2"
 //		runtime ":database-migration:1.1"
 		compile ":google-visualization:0.5.4"
+        compile ":mail:1.0"
 
         build ":tomcat:$grailsVersion"
     }
+}
+
+grails.war.resources = { stagingDir, args ->
+    println "Removing mail.jar and activation.jar from WEB-INF/lib/"
+    delete(file: "${stagingDir}/WEB-INF/lib/mail-1.4.3.jar")
+    delete(file: "${stagingDir}/WEB-INF/lib/activation-1.1.jar")
 }

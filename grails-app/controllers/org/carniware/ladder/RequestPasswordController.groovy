@@ -9,7 +9,6 @@ package org.carniware.ladder
  */
 class RequestPasswordController {
 
-    def springSecurityService
     def mailService
 
     def index() {
