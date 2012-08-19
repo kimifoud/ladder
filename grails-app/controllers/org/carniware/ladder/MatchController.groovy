@@ -171,6 +171,6 @@ class MatchController {
     }
 	
 	def ajaxFetchLatestMatches() {
-		render(template: "/home/latestMatches", model: [latestMatches: matchService.latestMatches()])
+        render(template: "/home/latestMatches", model: [latestMatches: matchService.latestMatches()])
 	}
 }

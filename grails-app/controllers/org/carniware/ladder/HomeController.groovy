@@ -8,7 +8,8 @@ class HomeController {
     def matchService
 
     def index() {
-        [latestMatches: matchService.latestMatches(), shouts: Shout.list(max: 25)]
+        session["lastShoutId"] = 0L // we want shouts to be refreshed
+        [latestMatches: matchService.latestMatches(), news: News.list(max: 3)]
     }
 
 }

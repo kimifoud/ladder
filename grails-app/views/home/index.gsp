@@ -1,30 +1,9 @@
 <html>
 <head>
     <meta name='layout' content='main'/>
-    <r:require modules="application, knockout-dev"/>
+    <r:require modules="application"/>
     <title>Home</title>
     <g:javascript>
-        var shoutsViewModel = {
-            Shouts: ko.observableArray(),
-            HighestShout: ko.observable(0),
-            SortShouts: function() {
-                shoutsViewModel.Shouts.sort(
-                    function(left, right) {
-                        return left.id == right.id
-                            ? 0
-                            : (left.id < right.id ? 1 : -1)
-                    }
-                );
-
-                var highest = shoutsViewModel.Shouts()[0];
-
-                if (highest != undefined)
-                    shoutsViewModel.HighestShout(highest.id);
-            }
-        };
-
-        ko.applyBindings(shoutsViewModel, document.getElementById('shouts'));
-
         var cntShouts = 0;
         var cntMatches = 0;
         $(document).ready(function () {
@@ -37,12 +16,9 @@
         function ajaxFetchShouts() {
             $.ajax({
                 url: '${createLink(controller: 'shout', action: 'ajaxFetchShouts')}',
-                data: { id: shoutsViewModel.HighestShout() },
-                dataType: 'json',
+                dataType: 'html',
                 success:function (data) {
-                    ko.utils.arrayPushAll(shoutsViewModel.Shouts(),data);
-                    shoutsViewModel.Shouts.valueHasMutated();
-                    shoutsViewModel.SortShouts();
+                    prependShouts(data);
                     if (cntShouts < 60) { // poll for 60*5 seconds = 5 minutes
                         setTimeout(function () {
                             ajaxFetchShouts()
@@ -71,39 +47,72 @@
                     }
                 }
             });
+         }
+
+        function prependShouts(data) {
+            if (data.error != null)
+                newAlert('error', data.error, '#shoutErrors');
+            else {
+                $('#shouts').prepend(data)
+            }
         }
+
+        function showShoutError() {
+            newAlert('error', 'Error saving shout.', '#shoutErrors');
+        }
+
     </g:javascript>
 </head>
 
 <body>
 <div class="hero-unit">
-    <h1>Ladder application</h1>
-    <p>A <a href="http://www.grails.org">Grails</a> application for recording played pool matches to find out how good the M$ guys really are.</p>
+    <h1>Ladder</h1>
+
+    <p>A <a href="http://www.grails.org">Grails</a> application for recording played pool matches to find out how good the M$ guys really are.
+    </p>
     <ul>
-    <li><b>Rules</b>: <a href="http://www.sbil.fi/published_files/dbf1037.pdf">http://www.sbil.fi/published_files/dbf1037.pdf</a> (3. Kasipallo)</li>
-    <li><b>Beta</b>: During the beta stage all saved data may (or may not) be deleted at anytime without further notice. The recorded matches may (or may not) be wiped once the application goes live. Please report any bugs you may bump into :></li>
-    <li><b>Bug reports</b>: <a href="https://github.com/kimifoud/ladder/issues">https://github.com/kimifoud/ladder/issues</a></li>
-    <li><b>English</b>, because the app is <a href="https://github.com/kimifoud/ladder">open source</a> (and i18n is yet to come).</li>
+        <li><b>Rules</b>: <a
+                href="http://www.sbil.fi/published_files/dbf1037.pdf">http://www.sbil.fi/published_files/dbf1037.pdf</a> (3. Kasipallo)
+        </li>
+        <li><b>Beta</b>: During the beta stage all saved data may (or may not) be deleted at anytime without further notice. The recorded matches may (or may not) be wiped once the application goes live. Please report any bugs you may bump into :>
+        </li>
+        <li><b>Bug reports</b>: <a
+                href="https://github.com/kimifoud/ladder/issues">https://github.com/kimifoud/ladder/issues</a></li>
     </ul>
 </div>
 
 <div class="row">
-    <div class="span6"><div id="latestMatches" class="well"><g:render template="latestMatches" model="latestMatches"/></div></div>
+    <div class="span6">
+        <div id="latestMatches" class="well">
+            <g:render template="latestMatches" model="latestMatches"/>
+        </div>
+    </div>
 
     <div class="span6">
         <div class="well" id="shoutbox">
-            <g:formRemote id="shoutForm" name="shoutForm" url="[controller: 'shout', action: 'ajaxSave']" method="POST" before="disableShout()" after="enableShout(); cntShouts = 0" onSuccess="clearForm('#shoutForm')" style="margin-bottom: 5px">
-                <input class="span5" name="shout_" id="shout_" size="16" type="text">
-                <input type="submit" value="Shout!" id="shoutBtn" />
+            <g:formRemote id="shoutForm" name="shoutForm" url="[controller: 'shout', action: 'ajaxSave']" method="POST" before="disableShout()" after="enableShout(); cntShouts = 0" onSuccess="clearForm('#shoutForm'); prependShouts(data)" onFailure="showShoutError()" style="margin-bottom: 5px">
+                <div class="input-append">
+                    <input class="span4" id="shout_" type="text"><button class="btn" type="submit" id="shoutBtn">Shout!</button>
+                </div>
                 <g:hiddenField name="shout" id="shout" />
             </g:formRemote>
-            <div id="shouts">
-                <div class="scrollableShouts" data-bind="foreach: Shouts">
-                    <p><b>(<span data-bind="text: shouted"></span>) <span data-bind="text: shouter"></span></b> <span data-bind="text: shout"></span></p>
-                </div>
+            <div id="shoutErrors">
+
+            </div>
+            <div id="shouts" class="scrollableShouts">
+
             </div>
         </div>
     </div>
 </div>
+
+<g:if test="${news}">
+    <div class="row">
+        <div class="span12 well">
+            <g:render template="latestNews" model="${news}"/>
+        </div>
+    </div>
+</g:if>
+
 </body>
 </html>

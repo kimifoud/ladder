@@ -18,7 +18,7 @@ class User {
 
     String passwordRequestToken
 
-    static hasMany = [players: Player]
+    static hasMany = [players: Player, shouts: Shout, news: News]
 
 	static constraints = {
 		username blank: false, unique: true, email: true, maxSize: 50

@@ -3,19 +3,7 @@
     <g:if test="${latestMatches?.size() > 0}">
         <table class="table table-striped cursorpointer">
             <tbody>
-            <g:each var="match" in="${latestMatches}">
-                <tr>
-                    <td><g:link controller="match" action="show" id="${match.id}"><cw:dateFromNow
-                            date="${match.played}" format="short" /></g:link></td>
-                    <td style="text-align:right"><g:link controller="player" action="show"
-                                                         id="${match.player1.id}">${match.player1}</g:link> <cw:ratingChangeBadge
-                            rating="${match.player1rating}" ratingChange="${match.player1ratingChange}"/></td>
-                    <td><cw:ratingChangeBadge rating="${match.player2rating}"
-                                              ratingChange="${match.player2ratingChange}"/> <g:link controller="player"
-                                                                                                    action="show"
-                                                                                                    id="${match.player2.id}">${match.player2}</g:link></td>
-                </tr>
-            </g:each>
+                <g:render template="/home/matchRow" collection="${latestMatches}" />
             </tbody>
         </table>
     </g:if>

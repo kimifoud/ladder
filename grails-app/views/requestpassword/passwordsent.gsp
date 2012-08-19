@@ -1,4 +1,3 @@
-<!doctype html>
 <html>
 <head>
     <meta name='layout' content='main'/>
@@ -8,7 +7,7 @@
 
 <body>
 <div class="page-header">
-    <h1> <%-- <g:message code="register.label"/> --%></h1>
+    <h1>Yay!</h1>
 </div>
 
 <div class="row">
