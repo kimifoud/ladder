@@ -26,7 +26,7 @@
 </g:else>
 <g:javascript>
     $(document).ready(function() {
-        var width = $("#charts").width()
+        var width = $("#charts").width();
         $.ajax({
             url:"${createLink(controller: 'chart', action: 'renderPlayerChart')}",
             data: {id: ${params.id}, width: width},

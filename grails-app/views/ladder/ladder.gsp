@@ -2,6 +2,7 @@
 <head>
     <meta name='layout' content='main'/>
     <r:require modules="application, bootstrap-tab"/>
+    <gvisualization:apiImport/>
     <title>Leaderboard</title>
     <g:javascript>
         $(document).ready(function () {
@@ -20,8 +21,19 @@
             $('#laddertabs a').click(function (e) {
                 e.preventDefault();
                 $(this).tab('show');
-            })
+            });
+
+            var width = $(".page-header").width();
+            $.ajax({
+                url:"${createLink(controller: 'chart', action: 'renderLadderRatingDistributionChart')}",
+                data: {id: ${params.id != null ?: '\'\''}, width: width},
+                dataType: 'html',
+                success:function (data) {
+                    $("#charts").append(data);
+                }
+            });
         });
+
     </g:javascript>
 </head>
 
@@ -37,6 +49,7 @@
             <a href="#leaderboard_pane" data-toggle="tab">Leaderboard</a>
         </li>
         <li><a href="#matches_pane" data-toggle="tab">Matches</a></li>
+        <li><a href="#charts_pane" data-toggle="tab">Charts</a></li>
     </ul>
 </div>
 
@@ -72,6 +85,9 @@
 
         <div class="tab-pane fade" id="matches_pane">
             <g:render template="laddermatches" />
+        </div>
+        <div class="tab-pane fade" id="charts_pane">
+            <div id="charts"></div>
         </div>
     </div>
 </div>
