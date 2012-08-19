@@ -1,12 +1,12 @@
 <div class="row">
     <div class="span6">
         <dl class="dl-horizontal">
+            <dt>Rating</dt>
+            <dd>${rating}</dd>
             <dt>Matches played</dt>
             <dd>${matchesTotal}</dd>
-            <dt>Officials</dt>
-            <dd>${matchesOfficial}</dd>
-            <dt>Friendlies</dt>
-            <dd>${matchesFriendly}</dd>
+            <dt>Officials / Friendlies</dt>
+            <dd>${matchesOfficial} / ${matchesFriendly}</dd>
         </dl>
     </div>
 

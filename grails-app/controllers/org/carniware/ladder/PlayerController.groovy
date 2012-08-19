@@ -64,7 +64,7 @@ class PlayerController {
         }
         def wp = winningPercent.multiply(new BigDecimal(100)).setScale(2).toString() + " %"
         [player: player, matches: matchesToList, matchesTotal: matchesToList.totalCount, matchesOfficial: officialMatchCount,
-                matchesFriendly: friendlyMatchCount, victories: victories, winningPercent: wp, latest5: latest5]
+                matchesFriendly: friendlyMatchCount, rating: player.eloRating, victories: victories, winningPercent: wp, latest5: latest5]
     }
 
     def ajaxFetchMatches() {
