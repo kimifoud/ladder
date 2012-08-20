@@ -52,6 +52,8 @@
                 </ul>
                 <ul class="nav pull-right">
                     <sec:ifLoggedIn>
+                        %{-- TODO logic to update reservation status --}%
+                        <li id="reservationStatus"><a href="#">Status: <cw:reservationLabel online="${rstatus?.online}" reserved="${rstatus?.reserved}" queueSize="${rstatus?.queueSize}" /></a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="icon-user icon-white"></i> <sec:username/>

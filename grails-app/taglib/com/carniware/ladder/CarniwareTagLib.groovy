@@ -277,4 +277,21 @@ class CarniwareTagLib {
             out << p2rc.abs().intValue() + ' rating. '
         }
     }
+
+    def reservationLabel = { attrs ->
+        Boolean online = attrs?.online ? Boolean.parseBoolean(attrs.online) : false
+        Boolean reserved = attrs?.reserved ? Boolean.parseBoolean(attrs.reserved) : false
+        Integer queueSize = attrs?.queueSize ? Integer.parseInt(attrs.queueSize) : 0
+        if (!online) {
+            out << "<span class=\"label\">N/A</span>"
+        } else if (!reserved) {
+            out << "<span class=\"label label-success\">FREE</span>"
+        } else if (reserved && (!queueSize || queueSize < 1)) {
+            out << "<span class=\"label label-warning\">Reserved</span>"
+        } else {
+            out << "<span class=\"label label-important\">"
+            out << queueSize
+            out << " in queue</span>"
+        }
+    }
 }
