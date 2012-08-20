@@ -26,7 +26,8 @@
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-envelope"></i></span><g:textField id="username"
                                                                                                   name="j_username"
-                                                                                                  value="${params.username}"/>
+                                                                                                  value="${params.username}"
+                                                                                                  tabindex="1"/>
                         </div>
                     </div>
                 </div>
@@ -36,7 +37,7 @@
 
                     <div class="controls">
                         <div class="input-prepend">
-                            <span class="add-on"><i class="icon-lock"></i></span><g:passwordField name="j_password"
+                            <span class="add-on"><i class="icon-lock"></i></span><g:passwordField name="j_password" tabindex="2"
                                                                                                       id="password"/>
                         </div> <g:link controller="requestPassword">Forgot your password?</g:link>
                     </div>
@@ -46,7 +47,7 @@
                     <label class="control-label" for="remember_me">Remember me:</label>
 
                     <div class="controls">
-                        <g:checkBox name="${rememberMeParameter}" id="remember_me" checked="${hasCookie ? 'true' : 'false'}" class="checkbox"/></div>
+                        <g:checkBox name="${rememberMeParameter}" id="remember_me" checked="${hasCookie ? 'true' : 'false'}" class="checkbox" tabindex="3"/></div>
                 </div>
 
             </fieldset>
@@ -55,7 +56,7 @@
                 New user? Register <g:link controller="register">here.</g:link></div></div>
 
             <div class="form-actions">
-                <g:submitButton name="login" id="submit"
+                <g:submitButton name="login" id="submit" tabindex="4"
                                 value="${message(code: "springSecurity.login.button")}"
                                 class="btn btn-primary"/>
                 <g:link controller="home" class="btn">Cancel</g:link>
