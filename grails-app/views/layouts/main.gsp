@@ -36,7 +36,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <g:link controller="public" action="index" class="brand">The Ladder<sup> BETA-<g:meta name="app.version"/></sup></g:link>
+            <g:link controller="public" action="index" class="brand">The Ladder<sup> <g:meta name="app.version"/></sup></g:link>
             <div class="nav-collapse">
                 <ul class="nav">
                     <li ${controllerName in ['public', 'home', 'login'] ? 'class="active"' : ''}><g:link
