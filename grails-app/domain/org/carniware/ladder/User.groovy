@@ -13,6 +13,7 @@ class User {
 
     String firstName
     String lastName
+    String email
     Date dateCreated
     Date lastUpdated
 
@@ -21,8 +22,9 @@ class User {
     static hasMany = [players: Player, shouts: Shout, news: News]
 
 	static constraints = {
-		username blank: false, unique: true, email: true, maxSize: 50
+		username blank: false, maxSize: 50, unique: true
 		password blank: false
+        email blank: false, email: true, maxSize: 75, unique: true
         firstName blank: false, maxSize: 25, matches: "[a-zA-ZÅÄÖÜåäöü' '-]+"
         lastName blank: false, maxSize: 35, matches: "[a-zA-ZÅÄÖÜåäöü' '-]+"
         passwordRequestToken nullable: true

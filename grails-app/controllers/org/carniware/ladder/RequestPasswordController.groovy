@@ -17,7 +17,7 @@ class RequestPasswordController {
 
     def requestPassword = {
         // send a one-time token to user's email for password reset
-        sendPasswordRequestToken(params.username)
+        sendPasswordRequestToken(params.email)
 
         render(view: 'requested')
         // Do not inform possible hacker if username does not exist!
@@ -28,16 +28,16 @@ class RequestPasswordController {
         if (passwordRequestToken != null) {
             def user = User.findByPasswordRequestToken(passwordRequestToken)
             if (user != null) {
-                sendNewRandomPassword(user.username)
+                sendNewRandomPassword(user.email)
             }
         }
         render(view: 'passwordsent')
         // Do not inform possible hacker if it failed!
     }
 
-    def sendPasswordRequestToken(String username) {
+    def sendPasswordRequestToken(String email) {
         // check if user exists
-        def user = User.findByUsername(username)
+        def user = User.findByEmail(email)
         if (user != null) {
             // generate request token and save for user
             user.passwordRequestToken = UUID.randomUUID()
@@ -48,7 +48,7 @@ class RequestPasswordController {
             mailBody = mailBody + "\r\rhttp://ladder.lovebo.at/requestPassword/resetPassword?token=${user.passwordRequestToken}"
 
             mailService.sendMail {
-                to username
+                to email
                 from "admin@ladder.lovebo.at"
                 subject "Ladder password reset"
                 body mailBody
@@ -56,9 +56,9 @@ class RequestPasswordController {
         }
     }
 
-    def sendNewRandomPassword(String username) {
+    def sendNewRandomPassword(String email) {
         // check if user exists
-        def user = User.findByUsername(username)
+        def user = User.findByEmail(email)
         if (user != null) {
             // generate new password and send it through email
             def newPassword =  UUID.randomUUID().toString().substring(0, 8)
@@ -71,7 +71,7 @@ class RequestPasswordController {
             mailBody = mailBody + "\r\r${newPassword}"
 
             mailService.sendMail {
-                to username
+                to email
                 from "admin@ladder.lovebo.at"
                 subject "Your new Ladder password"
                 body mailBody

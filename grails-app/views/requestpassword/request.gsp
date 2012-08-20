@@ -23,11 +23,11 @@
         <g:form action="requestPassword" class="form-horizontal">
             <fieldset>
                 <div class="control-group">
-                    <label class="control-label" for="username">E-mail <span class="required-indicator">*</span></label>
+                    <label class="control-label" for="email">E-mail <span class="required-indicator">*</span></label>
 
                     <div class="controls">
                         <div class="input-prepend">
-                            <span class="add-on"><i class="icon-envelope"></i></span><g:textField name="username" />
+                            <span class="add-on"><i class="icon-envelope"></i></span><g:textField name="email" />
                         </div>
 
                         <p>Enter your e-mail address to start the process of resetting your password.</p></div>

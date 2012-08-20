@@ -24,7 +24,7 @@
 
                     <div class="controls">
                         <div class="input-prepend">
-                            <span class="add-on"><i class="icon-envelope"></i></span><g:textField id="username"
+                            <span class="add-on"><i class="icon-user"></i></span><g:textField id="username"
                                                                                                   name="j_username"
                                                                                                   value="${params.username}"
                                                                                                   tabindex="1"/>

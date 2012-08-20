@@ -36,9 +36,11 @@ class UserCommand {
     String passwordRepeat
     String firstName
     String lastName
+    String email
 
     static constraints = {
-        username blank: false, unique: true, email: true, maxSize: 50
+        username blank: false, maxSize: 50, unique: true
+        email blank: false, email: true, maxSize: 75, unique: true
         password blank: false
         passwordRepeat(blank: false, validator: { passwd2, uc ->
             return passwd2 == uc.password })

@@ -24,15 +24,26 @@
         <g:form action="save" class="form-horizontal">
             <fieldset>
                 <div class="control-group">
-                    <label class="control-label" for="username">E-mail <span class="required-indicator">*</span></label>
+                    <label class="control-label" for="username">Username:</label>
 
                     <div class="controls">
                         <div class="input-prepend">
-                            <span class="add-on"><i class="icon-envelope"></i></span><g:textField name="username"
-                                                                                                  value="${params.username}"/>
+                            <span class="add-on"><i class="icon-user"></i></span><g:textField id="username"
+                                                                                              name="username"
+                                                                                              value="${params.username}"/>
                         </div>
+                    </div>
+                </div>
 
-                        <p>Your e-mail address acts as your username.</p></div>
+                <div class="control-group">
+                    <label class="control-label" for="email">E-mail <span class="required-indicator">*</span></label>
+
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-envelope"></i></span><g:textField name="email"
+                                                                                                  value="${params.email}"/>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="control-group">

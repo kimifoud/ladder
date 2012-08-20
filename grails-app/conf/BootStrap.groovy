@@ -4,7 +4,6 @@ import org.carniware.ladder.UserRole
 import org.carniware.ladder.Role
 import org.carniware.ladder.Player
 import org.carniware.ladder.Ladder
-import grails.util.GrailsUtil
 import grails.util.Environment
 
 class BootStrap {
@@ -15,7 +14,7 @@ class BootStrap {
                 def roleUser = Role.findByAuthority('ROLE_USER') ?: new Role(authority: 'ROLE_USER').save(failOnError: true)
                 def roleAdmin = Role.findByAuthority('ROLE_ADMIN') ?: new Role(authority: 'ROLE_ADMIN').save(failOnError: true)
 
-                def admin = User.findByUsername('admin@admin.com') ?: new User(username: 'admin@admin.com', enabled: true, password: 'pass', firstName: 'Ad', lastName: 'Min').save(failOnError: true)
+                def admin = User.findByUsername('admin') ?: new User(username: 'admin', email: 'admin@admin.com', enabled: true, password: 'pass', firstName: 'Ad', lastName: 'Min').save(failOnError: true)
 
                 if (!admin.authorities.contains(roleUser)) {
                     UserRole.create(admin, roleUser, true)
@@ -24,7 +23,7 @@ class BootStrap {
                     UserRole.create(admin, roleAdmin, true)
                 }
 
-                def user = User.findByUsername('user@user.com') ?: new User(username: 'user@user.com', enabled: true, password: 'pass', firstName: 'Test', lastName: 'User',).save(failOnError: true)
+                def user = User.findByUsername('user') ?: new User(username: 'user', email: 'user@user.com', enabled: true, password: 'pass', firstName: 'Test', lastName: 'User').save(failOnError: true)
                 if (!user.authorities.contains(roleUser)) {
                     UserRole.create(user, roleUser, true)
                 }
