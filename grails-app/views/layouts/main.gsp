@@ -42,9 +42,9 @@
                     <li ${controllerName in ['public', 'home', 'login'] ? 'class="active"' : ''}><g:link
                             controller="public"><i class="icon icon-home icon-white"></i> Home</g:link></li>
                     <sec:ifLoggedIn>
-                        <li><g:link controller="match" action="myMatches"><i class="icon icon-th-list icon-white"></i> My matches</g:link></li>
                         <li ${controllerName in ['match'] && actionName == 'newMatch' ? 'class="active"' : ''}><g:link
-                                controller="match" action="newMatch"><i class="icon icon-th-list icon-white"></i> New match</g:link></li>
+                                controller="match" action="newMatch"><i class="icon icon-play icon-white"></i> New match</g:link></li>
+                        <li><g:link controller="match" action="myMatches"><i class="icon icon-th-list icon-white"></i> My matches</g:link></li>
                         <li ${controllerName in ['ladder'] ? 'class="active"' : ''}><g:link
                                 controller="ladder" action="leaderboard"><i class="icon icon-align-justify icon-white"></i> Ladder</g:link></li>
                     </sec:ifLoggedIn>

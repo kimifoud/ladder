@@ -17,6 +17,7 @@
             $.ajax({
                 url: '${createLink(controller: 'shout', action: 'ajaxFetchShouts')}',
                 dataType: 'html',
+                data: { timestamp: new Date().getTime() },
                 success:function (data) {
                     prependShouts(data);
                     if (cntShouts < 60) { // poll for 60*5 seconds = 5 minutes
@@ -37,6 +38,7 @@
             $.ajax({
                 url: '${createLink(controller: 'match', action: 'ajaxFetchLatestMatches')}',
                 dataType: 'html',
+                data: { timestamp: new Date().getTime() },
                 success:function (data) {
                     $('#latestMatches').html(data);
                     if (cntMatches < 24) { // poll for 24*5 minutes = 120 minutes
@@ -91,8 +93,8 @@
     <div class="span6">
         <div class="well" id="shoutbox">
             <g:formRemote id="shoutForm" name="shoutForm" url="[controller: 'shout', action: 'ajaxSave']" method="POST" before="disableShout()" after="enableShout(); cntShouts = 0" onSuccess="clearForm('#shoutForm'); prependShouts(data)" onFailure="showShoutError()" style="margin-bottom: 5px">
-                <div class="input-append">
-                    <input class="span4" id="shout_" type="text"><button class="btn" type="submit" id="shoutBtn">Shout!</button>
+                <div class="input-prepend input-append">
+                    <span class="add-on"><i class="icon icon-bullhorn"></i></span><input class="span4" id="shout_" type="text"><button class="btn" type="submit" id="shoutBtn">Shout!</button>
                 </div>
                 <g:hiddenField name="shout" id="shout" />
             </g:formRemote>
