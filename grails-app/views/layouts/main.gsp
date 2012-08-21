@@ -16,7 +16,9 @@
             $('.dropdown input, .dropdown label').click(function (e) {
                 e.stopPropagation();
             });
-        });</g:javascript>
+
+        });
+        var cntResPolls = 0;</g:javascript>
     <style type="text/css">
     body {
         padding-top: 60px;
@@ -53,7 +55,7 @@
                 <ul class="nav pull-right">
                     <sec:ifLoggedIn>
                         %{-- TODO logic to update reservation status --}%
-                        <li id="reservationStatus"><a href="#">Status: <cw:reservationLabel online="${rstatus?.online}" reserved="${rstatus?.reserved}" queueSize="${rstatus?.queueSize}" /></a></li>
+                        <li id="reservationStatus"></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="icon-user icon-white"></i> <sec:username/>

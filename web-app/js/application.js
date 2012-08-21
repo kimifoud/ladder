@@ -44,3 +44,23 @@ function disableShout() {
 function enableShout() {
     setTimeout(function() {$('#shout_').removeAttr('disabled'); $('#shoutBtn').removeAttr('disabled'); $('#shout_').focus();}, 5000);
 }
+
+function pollReservationStatus() {
+    $.ajax({
+        url: '/reservationStatus/ajaxFetchStatus',
+        dataType: 'html',
+        data: { timestamp: new Date().getTime() },
+        success:function (data) {
+            $('#reservationStatus').html(data);
+            if (cntResPolls++ < 120) { // poll for 120 * 1 minute = 120 minutes
+                setTimeout(function () {
+                    pollReservationStatus();
+                }, 60000);
+            }
+        }
+    });
+}
+
+$(document).ready(function() {
+    pollReservationStatus();
+})

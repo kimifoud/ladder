@@ -5,6 +5,7 @@ import org.carniware.ladder.Role
 import org.carniware.ladder.Player
 import org.carniware.ladder.Ladder
 import grails.util.Environment
+import org.carniware.ladder.LiveReservationStatus
 
 class BootStrap {
 
@@ -55,6 +56,7 @@ class BootStrap {
             case Environment.PRODUCTION: break;
             default: break;
         }
+        LiveReservationStatus.findById(1) ?: new LiveReservationStatus(reserved: false, queueSize: 0).save(failOnError: true, flush: true)
     }
     def destroy = {
     }

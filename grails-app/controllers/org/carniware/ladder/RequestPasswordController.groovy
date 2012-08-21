@@ -44,9 +44,8 @@ class RequestPasswordController {
             user.save()
 
             def mailBody = "Dear ${user.firstName},"
-            mailBody = mailBody + "\r\rClick the following link to reset your password."
-            // TODO create link with g.link(..)
-            mailBody = mailBody + "\r\rhttp://ladder.lovebo.at/requestPassword/resetPassword?token=${user.passwordRequestToken}"
+            mailBody = mailBody + "\r\rClick the following link to reset your password.\r\r"
+            mailBody = mailBody + g.link(absolute:true, controller: 'requestPassword', action: 'resetPassword', params: [token: user.passwordRequestToken])
 
             mailService.sendMail {
                 to email

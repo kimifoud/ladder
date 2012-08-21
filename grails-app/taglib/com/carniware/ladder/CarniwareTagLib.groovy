@@ -279,9 +279,9 @@ class CarniwareTagLib {
     }
 
     def reservationLabel = { attrs ->
-        Boolean online = attrs?.online ? Boolean.parseBoolean(attrs.online) : false
-        Boolean reserved = attrs?.reserved ? Boolean.parseBoolean(attrs.reserved) : false
-        Integer queueSize = attrs?.queueSize ? Integer.parseInt(attrs.queueSize) : 0
+        Boolean online = attrs?.online ?: false
+        Boolean reserved = attrs?.reserved ?: false
+        Integer queueSize = attrs?.queueSize ?: 0
         if (!online) {
             out << "<span class=\"label\">N/A</span>"
         } else if (!reserved) {

@@ -1,0 +1,1 @@
+<a href="#">Status: <cw:reservationLabel online="${online}" reserved="${reserved}" queueSize="${queueSize}" /></a>

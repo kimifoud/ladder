@@ -9,6 +9,6 @@ class UrlMappings {
 
         "/"(controller:'public', action: 'index')
         "500"(view:'/error')
-        "/reservation/toggle/$reservation?"(controller: 'reservationToggle', action: 'toggle')
+        "/reservation/toggle/$reservation?"(controller: 'reservationStatus', action: 'toggle')
     }
 }
