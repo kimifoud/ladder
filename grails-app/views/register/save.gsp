@@ -24,7 +24,7 @@
         <g:form action="save" class="form-horizontal">
             <fieldset>
                 <div class="control-group">
-                    <label class="control-label" for="username">Username:</label>
+                    <label class="control-label" for="username">Username: <span class="required-indicator">*</span></label>
 
                     <div class="controls">
                         <div class="input-prepend">

@@ -20,10 +20,10 @@ class ReservationStatusController {
             status.reserved = params.boolean('reserved')
             changed = true
         }
-        if (params.queueSize) {
-            status.queueSize = params.int('queueSize')
-            changed = true
-        }
+//        if (params.queueSize) {
+//            status.queueSize = params.int('queueSize')
+//            changed = true
+//        }
         if (changed) {
             status.save()
             render('ok')
