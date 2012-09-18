@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta name='layout' content='main'/>
-    <r:require modules="application, bootstrap-tab"/>
+    <r:require modules="application, bootstrap-tab, infovis"/>
     <gvisualization:apiImport/>
     <title>Leaderboard</title>
     <g:javascript>
@@ -32,7 +32,15 @@
                     $("#charts").append(data);
                 }
             });
+
+            var nwWidth = Math.min(600, width);
+            var nwHeight = Math.min(600, nwWidth);
+            $('#network-graph').css("width", nwWidth);
+            $('#network-graph').css("height", nwHeight);
+            initNetworkGraph();
         });
+
+//            var json = [{"id":1,"name":"Test User","data":{"$color":"#83548B","$type":"circle","$dim":10},"adjacencies":{"nodeTo":3,"nodeFrom":1}},{"id":4,"name":"Lassi Passi","data":{"$color":"#83548B","$type":"circle","$dim":10},"adjacencies":{"nodeTo":3,"nodeFrom":4}},{"id":2,"name":"Ad Min","data":{"$color":"#83548B","$type":"circle","$dim":10},"adjacencies":{"nodeTo":3,"nodeFrom":2}},{"id":3,"name":"Jussi Pussi","data":{"$color":"#83548B","$type":"circle","$dim":10},"adjacencies":[]}]
 
     </g:javascript>
 </head>
@@ -84,10 +92,14 @@
         </div>
 
         <div class="tab-pane fade" id="matches_pane">
-            <g:render template="laddermatches" />
+            <g:render template="laddermatches"/>
         </div>
+
         <div class="tab-pane fade" id="charts_pane">
             <div id="charts"></div>
+
+            <div id="network-graph" style="width: 400px; height: 400px;"></div>
+            <div id="log"></div>
         </div>
     </div>
 </div>
@@ -96,7 +108,7 @@
     var hash = document.location.hash;
     var prefix = "tab_";
     if (hash) {
-        $('.nav-tabs a[href='+hash.replace(prefix,"")+']').tab('show');
+        $('.nav-tabs a[href=' + hash.replace(prefix, "") + ']').tab('show');
     }
 
     // Change hash for page-reload
