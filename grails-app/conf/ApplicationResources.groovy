@@ -16,6 +16,6 @@ modules = {
 
     infovis {
         resource url: 'js/jit.js'
-        resource url: 'js/example1.js'
+        resource url: 'js/networkgraph.js'
     }
 }

@@ -92,14 +92,27 @@ class ChartController {
             List<MatchConnection> playersConnections = holder.getMatchConnectionsByPlayer(player)
             holder.removeFromMatchConnections(playersConnections)
             def playerResult = [id: player.id, name: player.name]
-            playerResult << [data: [$color: '#83548B', $type: 'circle', $dim: 10]]
-            playerResult << [adjacencies:[]]
-            playersConnections.each {
-                playerResult.put('adjacencies', [nodeTo: it.getOtherPlayersId(player), nodeFrom: player.id])
+            playerResult << [data: [$color: '#3366cc', $type: getRandomShape(), $dim: 10]]
+            def adjacencies = playersConnections.collect {
+                // TODO line color/width based on matches played
+                [nodeTo: it.getOtherPlayersId(player), nodeFrom: player.id]
             }
+            playerResult << [adjacencies: adjacencies]
             jsonData << playerResult
         }
         render jsonData as JSON
+    }
+
+    String getRandomShape() {
+        Random rand = new Random()
+        int randomNum = rand.nextInt(4);
+        switch (randomNum) {
+            case 0: return 'circle';
+            case 1: return 'square';
+            case 2: return 'triangle';
+            case 3: return 'star';
+            default: return 'circle';
+        }
     }
 }
 
