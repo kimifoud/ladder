@@ -33,15 +33,18 @@
                 }
             });
 
-            var nwWidth = Math.min(600, width);
-            var nwHeight = Math.min(600, nwWidth);
+            var nwWidth = Math.min(900, width);
+            var nwHeight = Math.min(600, width);
             $('#network-graph').css("width", nwWidth);
             $('#network-graph').css("height", nwHeight);
-            initNetworkGraph();
+            $.ajax({
+                url:"${createLink(controller: 'chart', action: 'renderLadderNetworkGraph')}",
+                dataType: 'json',
+                success:function (data) {
+                    initNetworkGraph(data, nwWidth, nwHeight);
+                }
+            });
         });
-
-//            var json = [{"id":1,"name":"Test User","data":{"$color":"#83548B","$type":"circle","$dim":10},"adjacencies":{"nodeTo":3,"nodeFrom":1}},{"id":4,"name":"Lassi Passi","data":{"$color":"#83548B","$type":"circle","$dim":10},"adjacencies":{"nodeTo":3,"nodeFrom":4}},{"id":2,"name":"Ad Min","data":{"$color":"#83548B","$type":"circle","$dim":10},"adjacencies":{"nodeTo":3,"nodeFrom":2}},{"id":3,"name":"Jussi Pussi","data":{"$color":"#83548B","$type":"circle","$dim":10},"adjacencies":[]}]
-
     </g:javascript>
 </head>
 
