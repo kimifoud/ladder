@@ -49,7 +49,7 @@
             source:function (request, response) {
                 $.ajax({
                     url:"${createLink(controller: 'match', action: 'ajaxFindOpponents')}", // remote datasource
-                    data:request,
+                    data: {term: request.term},
                     success:function (data) {
                         response(data); // set the response
                     }

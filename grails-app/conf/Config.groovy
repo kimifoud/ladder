@@ -1,5 +1,6 @@
 import org.apache.log4j.rolling.RollingFileAppender
 import org.apache.log4j.rolling.TimeBasedRollingPolicy
+import grails.util.Environment
 // locations to search for config files that get merged into the main config
 // config files can either be Java properties files or ConfigSlurper scripts
 
@@ -37,7 +38,7 @@ grails.mime.types = [html: ['text/html', 'application/xhtml+xml'],
 grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']
 
 // The default codec used to encode data with ${}
-grails.views.default.codec = "none" // none, html, base64
+grails.views.default.codec = "html" // none, html, base64
 grails.views.gsp.encoding = "UTF-8"
 grails.converters.encoding = "UTF-8"
 // enable Sitemesh preprocessing of GSP pages
@@ -77,7 +78,7 @@ environments {
 
 // log4j configuration
 log4j = {
-    def rollingFile = new RollingFileAppender(name: 'rollingFileAppender', layout: pattern(conversionPattern: "%d [%t] %-5p %c{2} %x - %m%n"))
+    def rollingFile = new RollingFileAppender(name: 'appLog', layout: pattern(conversionPattern: "%d [%t] %-5p %c{2} %x - %m%n"))
     // Rolling policy where log filename is logs/ladder.log.
     // Rollover each day, compress and save in logs/backup directory.
     def rollingPolicy = new TimeBasedRollingPolicy(fileNamePattern: 'logs/backup/ladder.%d{yyyy-MM-dd}.gz', activeFileName: 'logs/ladder.log')
@@ -85,12 +86,9 @@ log4j = {
     rollingFile.setRollingPolicy rollingPolicy
 
     appenders {
+        // Use this if we want to modify the default appender called 'stdout'.
+        console name:'stdout', layout:pattern(conversionPattern: '[%t] %-5p %c{2} %x - %m%n')
         appender rollingFile
-    }
-
-    root {
-        // Use our newly created appender.
-        error 'rollingFileAppender'
     }
 
     error 'org.codehaus.groovy.grails.web.servlet',  //  controllers
@@ -105,9 +103,34 @@ log4j = {
             'org.hibernate',
             'net.sf.ehcache.hibernate'
 
-    warn 'org.mortbay.log'
-    debug 'grails.app.jobs',
-    info 'org.carniware.ladder'
+    error 'grails.app' // Set the default log level for our app code.
+    debug 'grails.app.jobs'
+    debug 'grails.app.controller'
+    debug 'grails.app.service'
+    info 'grails.app.bootstrap'
+
+    switch (Environment.current) {
+        case Environment.DEVELOPMENT:
+            root {
+                debug 'appLog', 'stdout'
+                additivity = true
+            }
+            break
+        case Environment.TEST:
+            root {
+                debug 'appLog', 'stdout'
+                additivity = true
+            }
+            break
+        case Environment.PRODUCTION:
+            root {
+                error 'appLog'
+                additivity = true
+            }
+            break
+        default:
+            break
+    }
 }
 
 // Added by the Spring Security Core plugin:

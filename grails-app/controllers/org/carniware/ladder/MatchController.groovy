@@ -50,10 +50,10 @@ class MatchController {
 
     def ajaxFindOpponents = {
         String term = params?.term
-        def terms = term?.tokenize()
-        if (!terms) {
-           return
+        if (!term) {
+            return
         }
+        def terms = term?.tokenize()
         log.debug terms
         def opponentsFound = Player.withCriteria {
             user {
