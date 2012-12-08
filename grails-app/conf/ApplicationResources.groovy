@@ -13,4 +13,9 @@ modules = {
     error {
         resource url: 'css/errors.css'
     }
+
+    infovis {
+        resource url: 'js/jit.js'
+        resource url: 'js/networkgraph.js'
+    }
 }

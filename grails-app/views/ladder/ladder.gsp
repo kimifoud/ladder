@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta name='layout' content='main'/>
-    <r:require modules="application, bootstrap-tab"/>
+    <r:require modules="application, bootstrap-tab, infovis"/>
     <gvisualization:apiImport/>
     <title>Leaderboard</title>
     <g:javascript>
@@ -32,8 +32,19 @@
                     $("#charts").append(data);
                 }
             });
-        });
 
+            var nwWidth = Math.min(900, width);
+            var nwHeight = Math.min(600, width);
+            $('#network-graph').css("width", nwWidth);
+            $('#network-graph').css("height", nwHeight);
+            $.ajax({
+                url:"${createLink(controller: 'chart', action: 'renderLadderNetworkGraph')}",
+                dataType: 'json',
+                success:function (data) {
+                    initNetworkGraph(data, nwWidth, nwHeight);
+                }
+            });
+        });
     </g:javascript>
 </head>
 
@@ -84,10 +95,14 @@
         </div>
 
         <div class="tab-pane fade" id="matches_pane">
-            <g:render template="laddermatches" />
+            <g:render template="laddermatches"/>
         </div>
+
         <div class="tab-pane fade" id="charts_pane">
             <div id="charts"></div>
+
+            <div id="network-graph" style="width: 400px; height: 400px;"></div>
+            <div id="log"></div>
         </div>
     </div>
 </div>
@@ -96,7 +111,7 @@
     var hash = document.location.hash;
     var prefix = "tab_";
     if (hash) {
-        $('.nav-tabs a[href='+hash.replace(prefix,"")+']').tab('show');
+        $('.nav-tabs a[href=' + hash.replace(prefix, "") + ']').tab('show');
     }
 
     // Change hash for page-reload
